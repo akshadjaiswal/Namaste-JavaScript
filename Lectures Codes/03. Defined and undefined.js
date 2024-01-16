@@ -14,3 +14,11 @@ if (a === undefined) {
 else {
     console.log("a is not undefined")
 }
+
+//Holding in javascript
+var b;
+console.log(b);
+b = 10;
+console.log(b);
+b = "Hello Akshad"
+console.log(b);
