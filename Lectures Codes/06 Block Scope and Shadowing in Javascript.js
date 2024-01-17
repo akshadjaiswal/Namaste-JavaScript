@@ -33,3 +33,13 @@ const z=300;
 console.log(x);
 console.log(y);//It will print the y variable present outside the block
 console.log(z);//It will print the z variable present outside the block
+
+//Shadowing for function
+var o=10;
+function q(){
+    var o=25;
+    console.log(window.o);//Inside block scope o variable 
+    window.o=20;
+}
+q();
+console.log(o);//Outside block scope o variable 
