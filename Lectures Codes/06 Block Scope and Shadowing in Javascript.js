@@ -43,3 +43,13 @@ function q(){
 }
 q();
 console.log(o);//Outside block scope o variable 
+
+//Illegal shadowing
+// let w=200;
+var w = 12;  // but we can shadow var using let
+{
+    // var w=20;//you cannot shadow let using var 
+    let w = 20;// But you can shadow let using let
+    console.log(w);
+}
+console.log(w);
