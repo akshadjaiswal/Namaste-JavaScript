@@ -40,3 +40,18 @@ function outer(b) {
 }
 var close = outer("Hello from Akshad");
 close();
+
+//Relation of scope chain and closure
+function outest() {
+    function outer(b) {
+        var c = 20;
+        function inner() {
+            console.log(a, b, c);
+        }
+        let a = 10;
+        return inner;
+    }
+    return outer;
+}
+var close = outest()("Hello from Akshad");
+close();
