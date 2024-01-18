@@ -71,3 +71,18 @@ function outest() {
 let a = 100;//but it will still print the value of a present in the function scope.
 var close = outest()("Hello from Akshad");
 close();
+
+//Example of data privacy using closures
+function counter() {
+    count = 0;
+    return function incrmentCounter() {
+        count++;
+        console.log(count);
+    }
+}
+//console.log(count);// No one can access this count outside the closure.it will throw error.
+var counter1 = counter();
+counter1();
+counter1();
+counter1();
+counter1();
