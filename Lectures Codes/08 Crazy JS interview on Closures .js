@@ -29,3 +29,14 @@ function outer() {
     return inner;
 }
 outer()();
+
+//Pass an paramerter in outer function
+function outer(b) {
+    function inner() {
+        console.log(a, b);
+    }
+    let a = 10;
+    return inner;
+}
+var close = outer("Hello from Akshad");
+close();
