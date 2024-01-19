@@ -9,3 +9,8 @@ function x(y) {
 x(function y() {
     console.log("y")
 });
+
+//Event handler and listeners in javascript
+document.getElementById("clickMe").addEventListener("click", function xyz() {
+    console.log("button clicked");
+})
