@@ -16,7 +16,7 @@ b()//you can only call it after the function
 
 //Anonymous function
 // function () {
-    
+
 // }
 
 // Named function expression
@@ -25,3 +25,11 @@ var b = function xyz() {
 }
 b()
 xyz()//you cannot call this function using xyz due to its scope properties //error undefined
+
+// Differnce between parameter and arguements
+param1 = 10;
+param2 = 20;
+var b = function (param1, param2) {// the value passed here are called as parameters 
+    console.log("b called");
+}
+b(param1, param2)// the value passed here are called as arguements
