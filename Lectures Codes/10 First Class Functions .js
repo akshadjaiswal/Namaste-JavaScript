@@ -33,3 +33,12 @@ var b = function (param1, param2) {// the value passed here are called as parame
     console.log("b called");
 }
 b(param1, param2)// the value passed here are called as arguements
+
+//First class function
+//abilities to use functions as values is called as first class function
+var b = function (param1) {
+    return function xyz() {
+
+    }
+}
+console.log(b())//we can return function in function as arguement
