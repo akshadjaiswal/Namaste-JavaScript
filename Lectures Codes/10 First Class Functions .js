@@ -18,3 +18,10 @@ b()//you can only call it after the function
 // function () {
     
 // }
+
+// Named function expression
+var b = function xyz() {
+    console.log(xyz);
+}
+b()
+xyz()//you cannot call this function using xyz due to its scope properties //error undefined
