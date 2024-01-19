@@ -2,6 +2,7 @@ a();//It will call the function a
 // b();//It will throw an error undefined
 
 //Function Expression
+//also called as function declaration
 function a() {
     console.log("a called");
 }
