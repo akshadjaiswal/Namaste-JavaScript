@@ -13,3 +13,8 @@ var b = function () {
     console.log("b called");
 }
 b()//you can only call it after the function
+
+//Anonymous function
+// function () {
+    
+// }
