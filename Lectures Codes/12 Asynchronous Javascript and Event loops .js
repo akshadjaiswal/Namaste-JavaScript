@@ -18,3 +18,17 @@ document.getElementById("button")
         console.log("CallBack");
     });
 console.log("End");
+
+//Example using fetch
+//Example
+console.log("Start")
+setTimeout(function cbT() {
+    console.log(" cb setTimeout")
+}, 5000);
+fetch("https://api.netflix.com")
+    .then(function cbF() {
+        console.log("cb Netflix")
+    })
+
+console.log("End")
+
