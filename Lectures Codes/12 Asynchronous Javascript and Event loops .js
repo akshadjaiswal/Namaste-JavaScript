@@ -1,5 +1,10 @@
 //Event loops
-//Browser functionality of settimeout
+//Browser functionality 
+//DOM APIs
+//settimeout
+//console
+//fetch()
+
 console.log("Start")
 setTimeout(function cb() {
     console.log("Callback")
