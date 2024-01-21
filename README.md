@@ -35,8 +35,10 @@ Assume the execution context to be a big box where everything takes place. It ha
 
 # Episode 11 : setTimeout + Closures Interview Question
 
-# Episode 14 : First class and Anonymous functions
+# Episode 12 : JS interview questions
 
-# Episode 15 : Callbacks and Event Listeners
+# Episode 13 : First class and Anonymous functions
 
-# Episode 16 : Asynchronous JS and Event Loops
+# Episode 14 : Callbacks and Event Listeners
+
+# Episode 15 : Asynchronous JS and Event Loops
