@@ -15,3 +15,28 @@ Assume the execution context to be a big box where everything takes place. It ha
 
 ### JS is a synchronous single-threaded language.
 
+# Episode 2 : Execution & Call Stack
+
+# Episode 3 : Hoisting
+
+# Episode 4 : Functions and Variable Environments
+
+# Episode 5: Window and this keyword
+
+# Episode 6: Undefined vs Not Defined
+
+# Episode 7 : Scope and Lexical Environment
+
+# Episode 8 : let, const, temporal dead zone, types of errors
+
+# Episode 9 : Block Scope and Shadowing
+
+# Episode 10 : Closures in JS
+
+# Episode 11 : setTimeout + Closures Interview Question
+
+# Episode 14 : First class and Anonymous functions
+
+# Episode 15 : Callbacks and Event Listeners
+
+# Episode 16 : Asynchronous JS and Event Loops
