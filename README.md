@@ -42,3 +42,5 @@ Assume the execution context to be a big box where everything takes place. It ha
 # Episode 14 : Callbacks and Event Listeners
 
 # Episode 15 : Asynchronous JS and Event Loops
+
+# Episode 16 : JS Engine Exposed Google's V8 architecture
