@@ -82,5 +82,6 @@ Companies use different JS engines and each try to make theirs the best.
 
 - v8 of Google has Interpreter called _Ignition_, a compiler called _Turbo Fan_ and garbage collector called _Orinoco_
 
+# Episode 18 : Trust issues with settimeout() 
 
 
