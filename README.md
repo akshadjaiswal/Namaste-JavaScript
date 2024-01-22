@@ -17,6 +17,11 @@ Assume the execution context to be a big box where everything takes place. It ha
 
 # Episode 2 : Execution & Call Stack
 
+When a JS program is ran, a global execution context is created.
+- The execution context is created in two phases.
+- Memory creation phase - JS will allocate memory to variables and functions.
+- Code execution phase.
+
 # Episode 3 : Hoisting
 
 # Episode 4 : Functions and Variable Environments
