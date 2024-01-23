@@ -107,6 +107,13 @@ Companies use different JS engines and each try to make theirs the best.
 
 # Episode 17 : Trust issues with settimeout()
 
+### The First rule of JavaScript: Do not block the main thread (as JS is a single threaded(only 1 callstack language).
+- In code example, we are blocking the main thread. Observe Question and Output.
+- setTimeout guarantees that it will take at least the given timer to execute the code.
+- JS is a synchronous single threaded language. With just 1 thread it runs all pieces of code. It becomes
+kind of an interpreter language, and runs code very fast inside browser (no need to wait for code to be
+compiled) (JIT - Just in time compilation). And there are still ways to do async operations as well.
+
 # Episode 18 : High order function ft. Functional Programming
 
 
