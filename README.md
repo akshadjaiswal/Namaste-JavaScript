@@ -29,6 +29,10 @@ creation phase) of the Execution Context.
 
 # Episode 4 : Functions and Variable Environments
 
+## Code Flow in terms of Execution Context
+- The Global Execution Context (GEC) is created (the big box with Memory and Code subparts). Also GEC
+is pushed into Call Stack.
+
 # Episode 5: Window and this keyword
 
 # Episode 6: Undefined vs Not Defined
