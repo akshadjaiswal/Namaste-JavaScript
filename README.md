@@ -24,6 +24,9 @@ When a JS program is ran, a global execution context is created.
 
 # Episode 3 : Hoisting
 
+- <strong>Hoisting </strong> is a concept which enables us to extract values of variables and functions even before initialising/assigning value without getting error and this is happening due to the 1st phase (memory
+creation phase) of the Execution Context.
+
 # Episode 4 : Functions and Variable Environments
 
 # Episode 5: Window and this keyword
