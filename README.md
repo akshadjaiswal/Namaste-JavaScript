@@ -115,5 +115,7 @@ kind of an interpreter language, and runs code very fast inside browser (no need
 compiled) (JIT - Just in time compilation). And there are still ways to do async operations as well.
 
 # Episode 18 : High order function ft. Functional Programming
-
+#### Q: What is Higher Order Function?
+- Ans: A Higher-order functions are regular functions that take other functions as arguments or return functions as their results.
+- More explanations in the code file with examples and demonstration.
 
