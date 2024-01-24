@@ -66,3 +66,18 @@ console.log(radius.map(area));
 console.log(radius.map(circumeference));
 console.log(radius.map(diameter));
 
+//Polyfill for map function
+Array.prototype.calculate = function (logic) {
+    const output = [];
+    for (let i = 0; i < this.length; i++) {
+        output.push(logic(this[i]))
+    }
+    return output;
+}
+
+// Map function
+console.log(radius.calculate(area));
+
+
+console.log(radius.calculate(circumeference));
+
