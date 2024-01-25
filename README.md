@@ -226,3 +226,4 @@ compiled) (JIT - Just in time compilation). And there are still ways to do async
 - Ans: A Higher-order functions are regular functions that take other functions as arguments or return functions as their results.
 - More explanations in the code file with examples and demonstration.
 
+# Episode 19 : map, filter and reduce
