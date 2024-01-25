@@ -54,6 +54,11 @@ it is Not defined
 ### When variable is declared but not assigned value, its current value is undefined. But when the variable itself is not declared but called in code, then it is not defined.
 
 # Episode 7 : Scope and Lexical Environment
+- Scope in Javascript is directly related to Lexical Environment.
+- So, Lexical Environment = local memory + lexical env of its parent. Hence, Lexical Environement isthe local memory along with the lexical environment of its parent.
+- Lexical: In hierarchy, In order
+- Whenever an Execution Context is created, a Lexical environment(LE) is also created and is referenced in the local Execution Context(in memory space).
+- The process of going one by one to parent and checking for values is called scope chain or Lexcial environment chain.
 
 # Episode 8 : let, const, temporal dead zone, types of errors
 
