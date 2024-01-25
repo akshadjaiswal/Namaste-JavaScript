@@ -79,6 +79,13 @@ it is Not defined
         This Error signifies that we are reassigning to a const variable.
   
 # Episode 9 : Block Scope and Shadowing
+### What is a Block?
+- Block aka compound statement is used to group JS statements together into 1 group. We group them within {...}
+### What is Shadowing?
+- So, If one has same named variable outside the block, the variable inside the block shadows the outside variable. This happens only for var.
+### What is Illegal Shadowing?
+- We cannot shadow let with var. But it is valid to shadow a let using a let. However, we can shadow var with let.
+- All scope rules that work in function are same in arrow functions too.
 
 # Episode 10 : Closures in JS
 
