@@ -61,7 +61,23 @@ it is Not defined
 - The process of going one by one to parent and checking for values is called scope chain or Lexcial environment chain.
 
 # Episode 8 : let, const, temporal dead zone, types of errors
-
+- let and const declarations are hoisted. But its different from var.
+- Temporal Dead Zone : Time since when the let variable was hoisted until it is initialized some value.
+- Reference Error are thrown when variables are in temporal dead zone.
+- Syntax Error doesn't even let us run single line of code
+- Let is a stricter version of var. Now, const is even more stricter than let.
+- Types of Error: Syntax, Reference, and Type.
+    - Uncaught ReferenceError: x is not defined at ...
+        This Error signifies that x has never been in the scope of the program. This literally means that x was never defined/declared and is being tried to be accesed.
+    - Uncaught ReferenceError: cannot access 'a' before initialization
+        This Error signifies that 'a' cannot be accessed because it is declared as 'let' and since it is not assigned a value, it is its Temporal Dead Zone. Thus, this error occurs.
+    - Uncaught SyntaxError: Identifier 'a' has already been declared
+        This Error signifies that we are redeclaring a variable that is 'let' declared. No execution will take place.
+    - Uncaught SyntaxError: Missing initializer in const declaration
+        This Error signifies that we haven't initialized or assigned value to a const declaration.
+    - Uncaught TypeError: Assignment to constant variable
+        This Error signifies that we are reassigning to a const variable.
+  
 # Episode 9 : Block Scope and Shadowing
 
 # Episode 10 : Closures in JS
