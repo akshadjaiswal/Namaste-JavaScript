@@ -103,10 +103,23 @@ it is Not defined
     - Freeze browser
 
 # Episode 11 : setTimeout + Closures Interview Question
-## Time, tide and Javascript wait for none.
-
+- Time, tide and Javascript wait for none.
 
 # Episode 12 : JS interview questions
+- Q1: What is Closure in Javascript?
+    - Ans: A function along with reference to its outer environment together forms a closure. Or in other words, A Closure is a combination of a function and its lexical scope bundled together.
+- Q2: Will the below code still forms a closure?
+    -  Yes, because inner function forms a closure with its outer environment so sequence doesn't matter.
+- Q3: Changing var to let, will it make any difference? 
+- Q4: Will inner function have the access to outer function argument?
+- Q5: In below code, will inner form closure with outest?
+- Q6: Output of below code and explaination?
+- Q7: Advantage of Closure?
+- Q8: Discuss more on Data hiding and encapsulation?
+- Q9: Disadvantage of closure?
+    - Overconsumption of memory when using closure as everytime as those closed over variables are not garbage collected till program expires. So when creating many closures, more memory is accumulated and this can create memory leaks if not handled. Garbage collector : Program in JS engine or browser that frees up unused memory. In highlevel languageslike C++ or JAVA, garbage collection is left to the programmer, but in JS engine its done implicitly.
+ 
+
 
 # Episode 13 : First class and Anonymous functions
 
