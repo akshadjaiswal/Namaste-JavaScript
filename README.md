@@ -88,6 +88,19 @@ it is Not defined
 - All scope rules that work in function are same in arrow functions too.
 
 # Episode 10 : Closures in JS
+- Function bundled along with it's lexical scope is closure.
+- JavaScript has a lexcial scope environment. If a function needs to access a variable, it first goes to its local memory. When it does not find it there, it goes to the memory of its lexical parent.
+- A closure is a function that has access to its outer function scope even after the function has returned. Meaning, A closure can remember and access variables and arguments reference of its outer function even after the function has returned.
+- Advantages of Closure:
+    - Module Design Pattern
+    - Currying
+    - Memoize
+    - Data hiding and encapsulation
+    - setTimeouts etc.
+- Disadvantages of Closure:
+    - Over consumption of memory
+    - Memory Leak
+    - Freeze browser
 
 # Episode 11 : setTimeout + Closures Interview Question
 
