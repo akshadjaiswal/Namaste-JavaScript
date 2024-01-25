@@ -136,6 +136,14 @@ it is Not defined
     - We can pass functions inside a function as arguments and /or return a function(HOF). These ability are altogether known as First class function. It is programming concept available in some other languages too.
       
 # Episode 14 : Callbacks and Event Listeners
+- Callback Functions
+    - Functions are first class citizens ie. take a function A and pass it to another function B. Here, A is a callback function. So basically I am giving access to function B to call function A. This callback function gives us the access to whole Asynchronous world in Synchronous world.
+    - JS is a synchronous and single threaded language. But due to callbacks, we can do async things in JS.
+- Event Listener
+- Garbage Collection and removeEventListeners
+    - Event listeners are heavy as they form closures. So even when call stack is empty, EventListener won't free up memory allocated to count as it doesn't know when it may need count again. So we remove event listeners when we don't need them (garbage collected) onClick, onHover, onScroll all in a page can slow it down heavily.
+ 
+
 
 # Episode 15 : Asynchronous JS and Event Loops
 
