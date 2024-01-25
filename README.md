@@ -119,10 +119,22 @@ it is Not defined
 - Q9: Disadvantage of closure?
     - Overconsumption of memory when using closure as everytime as those closed over variables are not garbage collected till program expires. So when creating many closures, more memory is accumulated and this can create memory leaks if not handled. Garbage collector : Program in JS engine or browser that frees up unused memory. In highlevel languageslike C++ or JAVA, garbage collection is left to the programmer, but in JS engine its done implicitly.
  
-
-
 # Episode 13 : First class and Anonymous functions
-
+### Functions are heart ♥ of Javascript.
+- Q: What is Function statement?
+- Q: What is Function Expression?
+- Q: Difference between function statement and expression
+    - The major difference between these two lies in Hoisting.
+- Q: What is Function Declaration?
+    - Other name for function statement.
+- Q: What is Anonymous Function?
+    - A function without a name.
+- Q: What is Named Function Expression?
+    - Same as Function Expression but function has a name instead of being anonymous
+- Q: Parameters vs Arguments?
+- Q: What is First Class Function aka First Class Citizens?
+    - We can pass functions inside a function as arguments and /or return a function(HOF). These ability are altogether known as First class function. It is programming concept available in some other languages too.
+      
 # Episode 14 : Callbacks and Event Listeners
 
 # Episode 15 : Asynchronous JS and Event Loops
