@@ -103,6 +103,8 @@ it is Not defined
     - Freeze browser
 
 # Episode 11 : setTimeout + Closures Interview Question
+## Time, tide and Javascript wait for none.
+
 
 # Episode 12 : JS interview questions
 
