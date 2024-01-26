@@ -92,5 +92,31 @@ const users = [
 ]
 
 //List of full names
-const fullname = users.map((x) => x.firstName + " "+  x.lastName)
+const fullname = users.map((x) => x.firstName + " " + x.lastName)
 console.log(fullname);
+
+// reduce example for age
+const output6 = users.reduce(function (acc, curr) {
+    if (acc[curr.age]) {
+        acc[curr.age] = ++acc[curr.age];
+    } else {
+        acc[curr.age] = 1;
+    }
+    return acc;
+}, {})
+console.log(output6);
+
+//first name of user whos age is les than 30
+const output7 = users.filter((x) => x.age < 30).map((x) => x.firstName)
+
+console.log(output7)
+
+//first name of user whos age is les than 30 using reduce only
+const output8 = users.reduce(function (acc, curr) {
+    if (curr.age < 30) {
+        acc.push(curr.firstName)
+    }
+    return acc
+}, [])
+console.log(output8)
+
