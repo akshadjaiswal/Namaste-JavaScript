@@ -61,3 +61,24 @@ const output4 = arr.reduce(function (acc, curr) { //accumulator and current
     return acc;
 }, 0)
 console.log(output4);
+
+//Max of array using normal function
+function maxOfArray(x) {
+    let max = 0;
+    for (let i = 0; i < arr.length; i++) {
+        if (max < arr[i]) {
+            max = arr[i];
+        }
+    }
+    return max;
+}
+console.log(maxOfArray(arr));
+
+//Max of array using reduce
+const output5 = arr.reduce(function (acc, curr) {
+    if (acc < curr) {
+        acc = curr;
+    }
+    return acc;
+}, 0)
+console.log(output5)
