@@ -31,7 +31,7 @@ function isOdd(x) {
 function isEven(x) {
     return x % 2 === 0;
 }
-function greaterThanFour(x){
+function greaterThanFour(x) {
     return x > 4;
 }
 const odd = arr.filter(isOdd);
@@ -40,3 +40,24 @@ const greater = arr.filter(greaterThanFour);
 console.log(odd);
 console.log(even);
 console.log(greater);
+
+//Reduce - As the name reduce it actually does not reduce anything
+
+//Sum or max
+// Non reduce method
+
+function sumOfArray(x) {
+    let sum = 0;
+    for (let i = 0; i < arr.length; i++) {
+        sum = sum + arr[i];
+    }
+    return sum;
+}
+console.log(sumOfArray(arr))
+
+//By using reduce
+const output4 = arr.reduce(function (acc, curr) { //accumulator and current
+    acc = acc + curr;//acc is like sum and curr like arr[i]
+    return acc;
+}, 0)
+console.log(output4);
