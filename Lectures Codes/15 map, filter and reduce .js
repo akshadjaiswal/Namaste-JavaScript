@@ -82,3 +82,15 @@ const output5 = arr.reduce(function (acc, curr) {
     return acc;
 }, 0)
 console.log(output5)
+
+//Example of Map 
+const users = [
+    { firstName: "Akshad", lastName: "Jaiswal", age: 21 },
+    { firstName: "Jarad", lastName: "Higgins", age: 22 },
+    { firstName: "Arijit", lastName: "Singh", age: 33 },
+    { firstName: "Tupac", lastName: "Shakur", age: 25 }
+]
+
+//List of full names
+const fullname = users.map((x) => x.firstName + " "+  x.lastName)
+console.log(fullname);
