@@ -10,7 +10,14 @@ function triple(x) {
     return x * 3
 }
 
+//Binary values of  the array
+function binary(x) {
+    return x.toString(2);
+}
+
 const output = arr.map(double);
 const output2 = arr.map(triple);
+const output3 = arr.map(binary);
 console.log(output);
 console.log(output2);
+console.log(output3);
