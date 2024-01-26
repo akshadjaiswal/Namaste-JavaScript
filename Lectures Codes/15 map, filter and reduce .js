@@ -21,3 +21,22 @@ const output3 = arr.map(binary);
 console.log(output);
 console.log(output2);
 console.log(output3);
+
+//Filter is use to filter the value in arrays according to some specific logic
+
+//Filter odd values from array
+function isOdd(x) {
+    return x % 2;
+}
+function isEven(x) {
+    return x % 2 === 0;
+}
+function greaterThanFour(x){
+    return x > 4;
+}
+const odd = arr.filter(isOdd);
+const even = arr.filter(isEven);
+const greater = arr.filter(greaterThanFour);
+console.log(odd);
+console.log(even);
+console.log(greater);
