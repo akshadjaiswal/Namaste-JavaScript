@@ -227,3 +227,13 @@ compiled) (JIT - Just in time compilation). And there are still ways to do async
 - More explanations in the code file with examples and demonstration.
 
 # Episode 19 : map, filter and reduce
+### map, filter & reducer are Higher Order Functions.
+- Map function
+    - It is basically used to transform a array. The map() method creates a new array with the results of calling afunction for every array element.
+    - So basically map function maps each and every value and transforming it based on given condition.
+- Filter function
+    - Filter function is basically used to filter the value inside an array. The arr.filter() method is used to create a new array from a given array consisting of only those elements from the given array which satisfy a condition set by the argument method.
+    - Filter function creates an array and store only those values which evaluates to true.
+- Reduce function
+    - It is a function which take all the values of array and gives a single output of it. It reduces the array to give a single output.
+      
