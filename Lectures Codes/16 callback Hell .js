@@ -24,5 +24,6 @@ api.createOrder(cart, function () {
 })
 
 //The structure will grow horizontally instead of growing vertically which leds to form pyramid of doom of code.
+//risk of inversion of controll
 
 
