@@ -4,6 +4,7 @@ This is my attempt at sharing JS knowledge with everyone, even those who might n
 ## 📝 Resource Used 
 [Namaste 🙏 JavaScript course](https://www.youtube.com/playlist?list=PLlasXeu85E9cQ32gLCvAvr9vNaUccPVNP) by [Akshay Saini](https://github.com/akshaymarch7)
 
+# Season 01:-
 # Episode 1 : Execution Context
 
 #### Everything in JS happens inside the execution context.
@@ -236,4 +237,7 @@ compiled) (JIT - Just in time compilation). And there are still ways to do async
     - Filter function creates an array and store only those values which evaluates to true.
 - Reduce function
     - It is a function which take all the values of array and gives a single output of it. It reduces the array to give a single output.
+      
+# Season 02:-
+# Episode 01 : Callback Hell.
       
