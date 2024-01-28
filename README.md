@@ -250,5 +250,7 @@ compiled) (JIT - Just in time compilation). And there are still ways to do async
     - This grows the code horizontally instead of vertically. That mechanism is known as callback hell. 
 
 - 2 Inversion of control
-    - The callback function is passed to another callback, this way we lose the control of our code. We don't know what is happening behind the scene and the program becomes very difficult to maintain. That process is called inversion of control. 
+    - The callback function is passed to another callback, this way we lose the control of our code. We don't know what is happening behind the scene and the program becomes very difficult to maintain. That process is called inversion of control.
+
+# Episode 02 : Promises.
       
