@@ -1,3 +1,4 @@
+
 # Namaste JavaScript Notes 🎯
 This is my attempt at sharing JS knowledge with everyone, even those who might not have the time to go through all the videos. Also, I will use this repo for quick reference to JS concepts when necessary. 
 
@@ -254,4 +255,12 @@ compiled) (JIT - Just in time compilation). And there are still ways to do async
 
 # Episode 02 : Promises.
 ### Promises are used to handle async operations in JavaScript.
+### We will discuss with code example that how things used to work before Promises and then how it works after Promises
+Interview Guide
+- What is Promise?
+    - Promise object is a placeholder for certain period of time until we receive value from asynchronous operation.
+    - A container for a future value.
+    - A Promise is an object representing the eventual completion or failure of an asynchronous operation.
+- We are now done solving one issue of callback i.e. Inversion of Control
+
       
