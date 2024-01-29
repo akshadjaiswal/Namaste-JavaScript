@@ -20,3 +20,32 @@ const promise = createOrder(cart);//// this promiseR has access to `then`
 promise.then(function () {
     procedToPayment(orderId)
 }); //Here we attaching a function to promise object
+
+//Promises chaining in javascript
+const cart2 = ["Shoes", "Watches", "Flags"]
+
+const orderId2 = createOrder(cart2);
+procedToPayment(orderId2);
+
+createOrder(cart2, function (orderId2) {
+    procedToPayment(orderId2, function (paymentInf) {
+        showOrderSummary(paymentInf, function () {
+            updateWalletBalance()
+        })
+    })
+});
+
+// const promise = createOrder(cart2);
+// promise.then(function () {
+//     procedToPayment(orderId2)
+// }); 
+
+createOrder(cart2).then(function (orderId2) {
+    return procedToPayment(orderId2);
+})
+    .then(function (paymentInf) {
+        return showOrderSummary(paymentInf)
+    })
+    .then(function () {
+        return updateWalletBalance();
+    })
