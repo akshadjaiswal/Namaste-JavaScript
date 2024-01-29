@@ -16,3 +16,7 @@ const promise = createOrder(cart);//// this promiseR has access to `then`
 // {data: undefined}
 // Initially it will be undefined so below code won't trigger
 // After some time, when execution has finished and promiseRef has the data then automatically the below line will get triggered.
+
+promise.then(function () {
+    procedToPayment(orderId)
+}); //Here we attaching a function to promise object
