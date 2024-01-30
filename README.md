@@ -253,7 +253,7 @@ compiled) (JIT - Just in time compilation). And there are still ways to do async
 - 2 Inversion of control
     - The callback function is passed to another callback, this way we lose the control of our code. We don't know what is happening behind the scene and the program becomes very difficult to maintain. That process is called inversion of control.
 
-# Episode 02 : Promises.
+# Episode 02 : [Promises.](https://github.com/akshadjaiswal/Namaste-JavaScript/blob/main/Lectures%20Codes/17%20Promises%20.js)
 ### Promises are used to handle async operations in JavaScript.
 ### We will discuss with code example that how things used to work before Promises and then how it works after Promises
 Interview Guide
@@ -263,4 +263,7 @@ Interview Guide
     - A Promise is an object representing the eventual completion or failure of an asynchronous operation.
 - We are now done solving one issue of callback i.e. Inversion of Control
 
-# Episode 03 : Creating promise, Chainning and Error Handling
+# Episode 03 : [Creating promise, Chainning and Error Handling](https://github.com/akshadjaiswal/Namaste-JavaScript/blob/main/Lectures%20Codes/17%20Promises%20.js)
+
+> Promises are used to handle async operations in JavaScript.
+
