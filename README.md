@@ -263,4 +263,4 @@ Interview Guide
     - A Promise is an object representing the eventual completion or failure of an asynchronous operation.
 - We are now done solving one issue of callback i.e. Inversion of Control
 
-      
+# Episode 03 : Creating promise, Chainning and Error Handling
