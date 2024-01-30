@@ -42,5 +42,5 @@ function procedToPayment() {
 }
 function validateCart(cart) {
     return true;
-    return false;// It will throw an error.//Card is not valid
+    // return false;// It will throw an error.//Card is not valid
 }

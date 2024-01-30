@@ -266,4 +266,10 @@ Interview Guide
 # Episode 03 : [Creating promise, Chainning and Error Handling](https://github.com/akshadjaiswal/Namaste-JavaScript/blob/main/Lectures%20Codes/17%20Promises%20.js)
 
 > Promises are used to handle async operations in JavaScript.
-
+- Now, Let's understand the concept of Promise Chaining
+    - for this we will assume after createOrder we have to invoke proceedToPayment
+    - In promise chaining, whatever is returned from first .then become data for next .then and so on...
+    - At any point of promise chaining, if promise is rejected, the execution will fallback to .catch and others promise won't run.
+- Q: What if we want to continue execution even if any of my promise is failing, how to achieve this?
+    - By placing the .catch block at some level after which we are not concerned with failure.
+    - There could be multiple .catch too.
