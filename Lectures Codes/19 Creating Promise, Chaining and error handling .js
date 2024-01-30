@@ -21,7 +21,9 @@ function createOrder(cart) {
         //CreateOrder
         const orderId = "12345";
         if (orderId) {
-            resolve(orderId);
+            setTimeout(function () {
+                resolve(orderId);
+            }, 5000)
         }
     });
     return pr;
