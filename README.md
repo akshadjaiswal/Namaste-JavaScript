@@ -240,7 +240,7 @@ compiled) (JIT - Just in time compilation). And there are still ways to do async
     - It is a function which take all the values of array and gives a single output of it. It reduces the array to give a single output.
       
 # Season 02:-
-# Episode 01 : Callback Hell.
+# Episode 01 : [Callback Hell.](https://github.com/akshadjaiswal/Namaste-JavaScript/blob/main/Lectures%20Codes/16%20callback%20Hell%20.js)
 ## There are 2 Parts of Callback:
 ### 1. Good Part of callback
 - Callback are super important while writing asynchronous code in JS.
