@@ -7,6 +7,9 @@ promise.then(function (orderId) {
     console.log(orderId)
     // procedToPayment(orderId);
 })
+    .catch(function (err) {
+        console.log(err.message);
+    })//Handling error and displaying normally in console 
 
 //Creating a promise
 //Producer side code
@@ -29,5 +32,6 @@ function createOrder(cart) {
     return pr;
 }
 function validateCart(cart) {
-    return true;
+    return false;// It will throw an error.//Card is not valid
+    // return true;
 }
