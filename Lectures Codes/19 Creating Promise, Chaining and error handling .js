@@ -1,12 +1,17 @@
 //Consuming Promise
 const cart = ["Shoes", "Watches", "Flags"]
 
-const promise = createOrder(cart);//return orderId
-
-promise.then(function (orderId) {
-    console.log(orderId)
-    // procedToPayment(orderId);
-})
+createOrder(cart)//return orderId
+    .then(function (orderId) {
+        console.log(orderId)
+        return orderId;
+    })
+    .then(function (orderId) {
+        return procedToPayment(orderId);
+    })
+    .then(function (paymentInfo) {
+        console.log(paymentInfo);
+    })
     .catch(function (err) {
         console.log(err.message);
     })//Handling error and displaying normally in console 
@@ -15,7 +20,6 @@ promise.then(function (orderId) {
 //Producer side code
 function createOrder(cart) {
     const pr = new Promise(function (resolve, reject) {
-        //createOrder
         //validateCart
         if (!validateCart(cart)) {
             const err = new Error("Cart is not valid")
@@ -26,12 +30,17 @@ function createOrder(cart) {
         if (orderId) {
             setTimeout(function () {
                 resolve(orderId);
-            }, 5000)
+            }, 2000)
         }
     });
     return pr;
 }
+function procedToPayment() {
+    return new Promise(function (resolve, reject) {
+        resolve("Payment Successful")
+    })
+}
 function validateCart(cart) {
+    return true;
     return false;// It will throw an error.//Card is not valid
-    // return true;
 }
