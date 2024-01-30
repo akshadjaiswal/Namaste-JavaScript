@@ -1,10 +1,11 @@
 //Consuming Promise
-const cart2 = ["Shoes", "Watches", "Flags"]
+const cart = ["Shoes", "Watches", "Flags"]
 
 const promise = createOrder(cart);//return orderId
 
-promise.then(function () {
-    procedToPayment(orderId);
+promise.then(function (orderId) {
+    console.log(orderId)
+    // procedToPayment(orderId);
 })
 
 //Creating a promise
@@ -24,4 +25,7 @@ function createOrder(cart) {
         }
     });
     return pr;
+}
+function validateCart(cart) {
+    return true;
 }
