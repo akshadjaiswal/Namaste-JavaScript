@@ -273,3 +273,5 @@ Interview Guide
 - Q: What if we want to continue execution even if any of my promise is failing, how to achieve this?
     - By placing the .catch block at some level after which we are not concerned with failure.
     - There could be multiple .catch too.
+
+# Episode 04 - [async await](https://github.com/akshadjaiswal/Namaste-JavaScript/blob/main/Lectures%20Codes/20%20async%20await%20%20.js)
