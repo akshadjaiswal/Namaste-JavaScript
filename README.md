@@ -2,6 +2,11 @@
 # Namaste JavaScript Notes 🎯
 This is my attempt at sharing JS knowledge with everyone, even those who might not have the time to go through all the videos. Also, I will use this repo for quick reference to JS concepts when necessary. 
 
+## ❓ what it is
+
+> This repo maintains my version of javascript notes which I learned from the famous [Namaste Javascript Youtube Series](https://www.youtube.com/watch?v=pN6jk0uUrD8&list=PLlasXeu85E9cQ32gLCvAvr9vNaUccPVNP&index=1&ab_channel=AkshaySaini) by Akshay Saini.
+
+
 ## 📝 Resource Used 
 [Namaste 🙏 JavaScript course](https://www.youtube.com/playlist?list=PLlasXeu85E9cQ32gLCvAvr9vNaUccPVNP) by [Akshay Saini](https://github.com/akshaymarch7)
 
@@ -291,3 +296,12 @@ Interview Guide
   - While we were using normal Promise we were using .catch to handle error, now in async-await we would be using try-catch block to handle error.
 - Async await vs Promise.then/.catch
   - What one should use? async-await is just a syntactic sugar around promise. Behind the scene async-await is just promise. So both are same, it's just async-await is new way of writing code. async-await solves few of the short-coming of Promise like Promise Chaining. async-await also increases the readability. So sort of it is always advisable to use async-await.
+
+## 🤝 Contribution Guidelines
+
+- Please create an issue with your suggestion. 
+- If you have notes of your own, and are interested in contributing to this repo, hit a PR ! I'll review it and add it immediately 🤓.
+
+## ✨ Show your support
+
+Give a ⭐️ if this project helped you!
