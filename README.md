@@ -29,7 +29,7 @@ When a JS program is ran, a global execution context is created.
 - <strong>Hoisting </strong> is a concept which enables us to extract values of variables and functions even before initialising/assigning value without getting error and this is happening due to the 1st phase (memory
 creation phase) of the Execution Context.
 
-# Episode 4 : Functions and Variable Environments
+# Episode 4 : [Functions and Variable Environments](https://github.com/akshadjaiswal/Namaste-JavaScript/blob/main/Lectures%20Codes/02.%20Function%20in%20Javascript.js)
 
 ## Code Flow in terms of Execution Context
 - The Global Execution Context (GEC) is created (the big box with Memory and Code subparts). Also GEC
