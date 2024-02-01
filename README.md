@@ -275,3 +275,19 @@ Interview Guide
     - There could be multiple .catch too.
 
 # Episode 04 - [async await](https://github.com/akshadjaiswal/Namaste-JavaScript/blob/main/Lectures%20Codes/20%20async%20await%20%20.js)
+- Topics Covered
+    - What is async?
+    - What is await?
+    - How async await works behind the scenes?
+    - Example of using async/await
+    - Error Handling
+    - Interviews
+    - Async await vs Promise.then/.catch
+- Q: What is async?
+  - A: Async is a keyword that is used before a function to create a async function.
+- Q: Question is Is program actually waiting or what is happening behind the scene?
+  - A: As we know, Time, Tide and JS wait for none. And it's true. Over here it appears that JS engine is waiting but JS engine is not waiting over here. It has not occupied the call stack if that would have been the case our page may have got frozen. So JS engine is not waiting. So if it is not waiting then what it is doing behind the scene? Let's understand with attached [code](https://github.com/akshadjaiswal/Namaste-JavaScript/blob/main/Lectures%20Codes/20%20async%20await%20%20.js)
+- Error Handling
+  - While we were using normal Promise we were using .catch to handle error, now in async-await we would be using try-catch block to handle error.
+- Async await vs Promise.then/.catch
+  - What one should use? async-await is just a syntactic sugar around promise. Behind the scene async-await is just promise. So both are same, it's just async-await is new way of writing code. async-await solves few of the short-coming of Promise like Promise Chaining. async-await also increases the readability. So sort of it is always advisable to use async-await.
