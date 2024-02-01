@@ -6,7 +6,7 @@ This is my attempt at sharing JS knowledge with everyone, even those who might n
 [Namaste 🙏 JavaScript course](https://www.youtube.com/playlist?list=PLlasXeu85E9cQ32gLCvAvr9vNaUccPVNP) by [Akshay Saini](https://github.com/akshaymarch7)
 
 # Season 01:-
-# Episode 1 : [Execution Context](https://github.com/akshadjaiswal/Namaste-JavaScript/blob/main/Lectures%20Codes/01.%20Hoisting%20in%20Javascript.js)
+# Episode 1 : Execution Context.
 
 #### Everything in JS happens inside the execution context.
 
@@ -24,7 +24,7 @@ When a JS program is ran, a global execution context is created.
 - Memory creation phase - JS will allocate memory to variables and functions.
 - Code execution phase.
 
-# Episode 3 : Hoisting
+# Episode 3 : [Hoisting](https://github.com/akshadjaiswal/Namaste-JavaScript/blob/main/Lectures%20Codes/01.%20Hoisting%20in%20Javascript.js)
 
 - <strong>Hoisting </strong> is a concept which enables us to extract values of variables and functions even before initialising/assigning value without getting error and this is happening due to the 1st phase (memory
 creation phase) of the Execution Context.
