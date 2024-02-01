@@ -6,7 +6,7 @@ This is my attempt at sharing JS knowledge with everyone, even those who might n
 [Namaste 🙏 JavaScript course](https://www.youtube.com/playlist?list=PLlasXeu85E9cQ32gLCvAvr9vNaUccPVNP) by [Akshay Saini](https://github.com/akshaymarch7)
 
 # Season 01:-
-# Episode 1 : Execution Context
+# Episode 1 : [Execution Context](https://github.com/akshadjaiswal/Namaste-JavaScript/blob/main/Lectures%20Codes/01.%20Hoisting%20in%20Javascript.js)
 
 #### Everything in JS happens inside the execution context.
 
