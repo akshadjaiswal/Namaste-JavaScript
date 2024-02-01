@@ -46,7 +46,7 @@ in the program. JS engine also creates a this keyword, which points to the windo
 something else. At global level, this === window.
 - If we create any variable in the global scope, then the variables get attached to the global object.
 
-# Episode 6: Undefined vs Not Defined
+# Episode 6: [Undefined vs Not Defined](https://github.com/akshadjaiswal/Namaste-JavaScript/blob/main/Lectures%20Codes/03.%20Defined%20and%20undefined.js)
 
 - In first phase (memory allocation) JS assigns each variable a placeholder called undefined.
 undefined is when memory is allocated for the variable, but no value is assigned yet.
@@ -55,14 +55,14 @@ it is Not defined
 - Not Defined !== Undefined
 ### When variable is declared but not assigned value, its current value is undefined. But when the variable itself is not declared but called in code, then it is not defined.
 
-# Episode 7 : Scope and Lexical Environment
+# Episode 7 : [Scope and Lexical Environment](https://github.com/akshadjaiswal/Namaste-JavaScript/blob/main/Lectures%20Codes/04%20Scope%20and%20Lexical%20Enviroment.js)
 - Scope in Javascript is directly related to Lexical Environment.
 - So, Lexical Environment = local memory + lexical env of its parent. Hence, Lexical Environement isthe local memory along with the lexical environment of its parent.
 - Lexical: In hierarchy, In order
 - Whenever an Execution Context is created, a Lexical environment(LE) is also created and is referenced in the local Execution Context(in memory space).
 - The process of going one by one to parent and checking for values is called scope chain or Lexcial environment chain.
 
-# Episode 8 : let, const, temporal dead zone, types of errors
+# Episode 8 : [let, const, temporal dead zone, types of errors](https://github.com/akshadjaiswal/Namaste-JavaScript/blob/main/Lectures%20Codes/05%20Let%20and%20Const.js)
 - let and const declarations are hoisted. But its different from var.
 - Temporal Dead Zone : Time since when the let variable was hoisted until it is initialized some value.
 - Reference Error are thrown when variables are in temporal dead zone.
@@ -80,7 +80,7 @@ it is Not defined
     - Uncaught TypeError: Assignment to constant variable
         This Error signifies that we are reassigning to a const variable.
   
-# Episode 9 : Block Scope and Shadowing
+# Episode 9 : [Block Scope and Shadowing](https://github.com/akshadjaiswal/Namaste-JavaScript/blob/main/Lectures%20Codes/06%20Block%20Scope%20and%20Shadowing%20in%20Javascript.js)
 ### What is a Block?
 - Block aka compound statement is used to group JS statements together into 1 group. We group them within {...}
 ### What is Shadowing?
@@ -89,7 +89,7 @@ it is Not defined
 - We cannot shadow let with var. But it is valid to shadow a let using a let. However, we can shadow var with let.
 - All scope rules that work in function are same in arrow functions too.
 
-# Episode 10 : Closures in JS
+# Episode 10 : [Closures in JS](https://github.com/akshadjaiswal/Namaste-JavaScript/blob/main/Lectures%20Codes/07%20Closures%20in%20Javascript.js)
 - Function bundled along with it's lexical scope is closure.
 - JavaScript has a lexcial scope environment. If a function needs to access a variable, it first goes to its local memory. When it does not find it there, it goes to the memory of its lexical parent.
 - A closure is a function that has access to its outer function scope even after the function has returned. Meaning, A closure can remember and access variables and arguments reference of its outer function even after the function has returned.
@@ -104,10 +104,10 @@ it is Not defined
     - Memory Leak
     - Freeze browser
 
-# Episode 11 : setTimeout + Closures Interview Question
+# Episode 11 : [setTimeout + Closures Interview Question](https://github.com/akshadjaiswal/Namaste-JavaScript/blob/main/Lectures%20Codes/08%20Set-Timeout%20%2B%20Closures%20interview%20questions.js)
 - Time, tide and Javascript wait for none.
 
-# Episode 12 : JS interview questions
+# Episode 12 : [JS interview questions](https://github.com/akshadjaiswal/Namaste-JavaScript/blob/main/Lectures%20Codes/09%20Crazy%20JS%20interview%20on%20Closures%20.js)
 - Q1: What is Closure in Javascript?
     - Ans: A function along with reference to its outer environment together forms a closure. Or in other words, A Closure is a combination of a function and its lexical scope bundled together.
 - Q2: Will the below code still forms a closure?
@@ -121,7 +121,7 @@ it is Not defined
 - Q9: Disadvantage of closure?
     - Overconsumption of memory when using closure as everytime as those closed over variables are not garbage collected till program expires. So when creating many closures, more memory is accumulated and this can create memory leaks if not handled. Garbage collector : Program in JS engine or browser that frees up unused memory. In highlevel languageslike C++ or JAVA, garbage collection is left to the programmer, but in JS engine its done implicitly.
  
-# Episode 13 : First class and Anonymous functions
+# Episode 13 : [First class and Anonymous functions](https://github.com/akshadjaiswal/Namaste-JavaScript/blob/main/Lectures%20Codes/10%20First%20Class%20Functions%20.js)
 ### Functions are heart ♥ of Javascript.
 - Q: What is Function statement?
 - Q: What is Function Expression?
@@ -137,7 +137,7 @@ it is Not defined
 - Q: What is First Class Function aka First Class Citizens?
     - We can pass functions inside a function as arguments and /or return a function(HOF). These ability are altogether known as First class function. It is programming concept available in some other languages too.
       
-# Episode 14 : Callbacks and Event Listeners
+# Episode 14 : [Callbacks and Event Listeners](https://github.com/akshadjaiswal/Namaste-JavaScript/blob/main/Lectures%20Codes/11%20Callback%20Fucntion%20in%20javaScript%20.js)
 - Callback Functions
     - Functions are first class citizens ie. take a function A and pass it to another function B. Here, A is a callback function. So basically I am giving access to function B to call function A. This callback function gives us the access to whole Asynchronous world in Synchronous world.
     - JS is a synchronous and single threaded language. But due to callbacks, we can do async things in JS.
@@ -147,7 +147,7 @@ it is Not defined
  
 
 
-# Episode 15 : Asynchronous JS and Event Loops
+# Episode 15 : [Asynchronous JS and Event Loops](https://github.com/akshadjaiswal/Namaste-JavaScript/blob/main/Lectures%20Codes/12%20Asynchronous%20Javascript%20and%20Event%20loops%20.js)
 ### Note: Call stack will execeute any execeution context which enters it. Time, tide and JS waits for none.
 TLDR; Call stack has no timer.
 - Browser has JS Engine which has Call Stack which has Global execution context, local execution context etc.
@@ -214,7 +214,7 @@ Companies use different JS engines and each try to make theirs the best.
 
 - v8 of Google has Interpreter called _Ignition_, a compiler called _Turbo Fan_ and garbage collector called _Orinoco_
 
-# Episode 17 : Trust issues with settimeout()
+# Episode 17 : [Trust issues with settimeout()](https://github.com/akshadjaiswal/Namaste-JavaScript/blob/main/Lectures%20Codes/13%20Trust%20issues%20with%20settimeout().js)
 
 ### The First rule of JavaScript: Do not block the main thread (as JS is a single threaded(only 1 callstack language).
 - In code example, we are blocking the main thread. Observe Question and Output.
@@ -223,12 +223,12 @@ Companies use different JS engines and each try to make theirs the best.
 kind of an interpreter language, and runs code very fast inside browser (no need to wait for code to be
 compiled) (JIT - Just in time compilation). And there are still ways to do async operations as well.
 
-# Episode 18 : High order function ft. Functional Programming
+# Episode 18 : [High order function ft. Functional Programming](https://github.com/akshadjaiswal/Namaste-JavaScript/blob/main/Lectures%20Codes/14%20Functional%20Programming%20.js)
 #### Q: What is Higher Order Function?
 - Ans: A Higher-order functions are regular functions that take other functions as arguments or return functions as their results.
 - More explanations in the code file with examples and demonstration.
 
-# Episode 19 : map, filter and reduce
+# Episode 19 : [map, filter and reduce](https://github.com/akshadjaiswal/Namaste-JavaScript/blob/main/Lectures%20Codes/15%20map%2C%20filter%20and%20reduce%20.js)
 ### map, filter & reducer are Higher Order Functions.
 - Map function
     - It is basically used to transform a array. The map() method creates a new array with the results of calling afunction for every array element.
