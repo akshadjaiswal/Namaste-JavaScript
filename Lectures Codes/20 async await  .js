@@ -16,3 +16,21 @@ const data2 = getData2()
 
 data2.then(res => console.log(res))
 promise.then(res => console.log(res))//Both are same
+
+//Async and await is use to handle promises
+const p = new Promise((resolve, reject) => {
+  resolve("Second promise reolved")
+})
+//handling through async await
+//await is a keyword than can only be used in async function
+async function promisehandler() {
+  const val = await p;
+  console.log(val);
+}
+promisehandler();
+
+//Handling nthrough normal function
+// function getData3() {
+//     p.then(res => (console.log(res)))
+// }
+// getData3();
