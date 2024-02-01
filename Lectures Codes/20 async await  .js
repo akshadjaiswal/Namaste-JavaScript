@@ -25,7 +25,12 @@ promise.then(res => console.log(res))//Both are same
 const p = new Promise((resolve, reject) => {
   setTimeout(() => {
     resolve("Second promise reolved")
-  },2000)
+  }, 10000)
+})
+const p1 = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    resolve("Second promise reolved")
+  }, 5000)
 })
 //handling through async await
 //await is a keyword than can only be used in async function
@@ -36,6 +41,10 @@ async function promisehandler() {
   const val = await p;
   console.log("Namaste Akshad")
   console.log(val);
+
+  const val1 = await p1;
+  console.log("Namaste Akshad 2")
+  console.log(val1);
 }
 promisehandler();
 
