@@ -16,6 +16,14 @@ function resolveAfter2Seconds() {
   });
 }
 
+async function asyncCall() {
+  console.log('calling');
+  const result = await resolveAfter2Seconds();
+  console.log(result);
+  // Expected output: "resolved"
+}
+asyncCall();
+
 //Creating a promise
 const promise = new Promise((res, rej) => {
   res("Promise Resolved")
