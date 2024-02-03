@@ -8,6 +8,14 @@ console.log(dataPromise); // Promise {<fulfilled>: 'Namaste JavaScript'}
 //❓How to extract data from above promise? One way is using promise .then
 dataPromise.then(res => console.log(res)); // Namaste JavaScript
 
+function resolveAfter2Seconds() {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve('resolved');
+    }, 2000);
+  });
+}
+
 //Creating a promise
 const promise = new Promise((res, rej) => {
   res("Promise Resolved")
