@@ -297,7 +297,7 @@ Interview Guide
 - Async await vs Promise.then/.catch
   - What one should use? async-await is just a syntactic sugar around promise. Behind the scene async-await is just promise. So both are same, it's just async-await is new way of writing code. async-await solves few of the short-coming of Promise like Promise Chaining. async-await also increases the readability. So sort of it is always advisable to use async-await.
 - Fetch Call and Error handling
-  - [Example of using of fetch api call using async await and error handling]().
+  - [Example of using of fetch api call using async await and error handling](Lectures Codes/21 async await example using fetch.js).
 ## 🤝 Contribution Guidelines
 
 - Please create an issue with your suggestion. 
