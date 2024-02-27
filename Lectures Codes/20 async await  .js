@@ -16,6 +16,14 @@ function resolveAfter2Seconds() {
   });
 }
 
+function resolveAfter10Seconds() {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve('resolved');
+    }, 10000);
+  });
+}
+
 async function asyncCall() {
   console.log('calling');
   const result = await resolveAfter2Seconds();
