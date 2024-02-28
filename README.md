@@ -310,4 +310,4 @@ Interview Guide
 
 ## ✨ Show your support
 
-Give a ⭐️ if this project helped you and try to contribute.
+Give a ⭐️ if this project helped you and try to contribute and share with people's 
