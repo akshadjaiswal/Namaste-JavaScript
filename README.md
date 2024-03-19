@@ -300,7 +300,7 @@ Interview Guide
   - [Example of using of fetch api call using async await and error handling](https://github.com/akshadjaiswal/Namaste-JavaScript/blob/main/Lectures%20Codes/21%20async%20await%20example%20using%20fetch.js).
 
 # Episode 04 : Promise APIs + Interview Questions 
-- Questions here soon
+- Questions here soon 🔜
 
 
 ## 🤝 Contribution Guidelines
