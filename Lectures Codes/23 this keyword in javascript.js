@@ -1,5 +1,5 @@
 const test = {
-  prop: 42,
+  prop: Akshad,
   func: function () {
     return this.prop;
   },
