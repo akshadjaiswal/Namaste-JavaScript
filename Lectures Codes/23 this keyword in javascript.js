@@ -33,16 +33,21 @@ x();
 window.x();
 
 //this inside a object method
- const obj={
-  a: "Akshad",
-  x: function (){
-    console.log(this);
-    console.log(this.a);
+ const student={
+  name: "Akshad",
+  printName: function (){
+    console.log/(this);
+    console.log(this.name);
   }
  }
- obj.x();
-
-//call apply bind method (sharing method)
+ student.printName();
+ 
+ const student2={
+  name:"Aaradhana"
+ }
+ 
+ //call apply bind method (sharing method)
+ student.printName.call(student2);
 
 //this insdie arrow function
 
