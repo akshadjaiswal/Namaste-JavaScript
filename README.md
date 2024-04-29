@@ -302,6 +302,9 @@ Interview Guide
 # Episode 04 : Promise APIs + Interview Questions 
 - Questions here soon 🔜
 
+# Episdoe 05 - this keyword in Javascript
+- JavaScript's "this" keyword can be confusing for many and behaves differently in various scenarios
+
 
 ## 🤝 Contribution Guidelines
 
