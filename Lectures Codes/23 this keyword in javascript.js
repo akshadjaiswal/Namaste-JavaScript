@@ -48,6 +48,8 @@ window.x();
  
  //call apply bind method (sharing method)
  student.printName.call(student2);
+//apply
+//bind
 
 //this insdie arrow function
 
