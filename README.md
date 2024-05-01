@@ -304,7 +304,7 @@ Interview Guide
 
 # Episdoe 05 - this keyword in Javascript
 - JavaScript's "this" keyword can be confusing for many and behaves differently in various scenarios.
-
+- In JavaScript, this keyword refers to the current context or scope within which code is executing. Its value is determined by how a function is called, and it can dynamically change depending on the invocation context.
 
 ## 🤝 Contribution Guidelines
 
