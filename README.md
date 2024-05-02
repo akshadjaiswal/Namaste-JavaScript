@@ -1,4 +1,3 @@
-
 # Namaste JavaScript Notes 🎯
 This is my attempt at sharing JS knowledge with everyone, even those who might not have the time to go through all the videos. Also, I will use this repo for quick reference to JS concepts when necessary. 
 
@@ -31,8 +30,7 @@ When a JS program is ran, a global execution context is created.
 
 # Episode 3 : [Hoisting](https://github.com/akshadjaiswal/Namaste-JavaScript/blob/main/Lectures%20Codes/01.%20Hoisting%20in%20Javascript.js)
 
-- <strong>Hoisting </strong> is a concept which enables us to extract values of variables and functions even before initialising/assigning value without getting error and this is happening due to the 1st phase (memory
-creation phase) of the Execution Context.
+- <strong>Hoisting </strong> is a concept which enables us to extract values of variables and functions even before initialising/assigning value without getting error and this is happening due to the 1st phase (memory creation phase) of the Execution Context.
 
 # Episode 4 : [Functions and Variable Environments](https://github.com/akshadjaiswal/Namaste-JavaScript/blob/main/Lectures%20Codes/02.%20Function%20in%20Javascript.js)
 
