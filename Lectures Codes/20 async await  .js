@@ -73,7 +73,7 @@ async function promisehandler() {
 promisehandler();
 
 //Handling nthrough normal function
-// function getData3() {
-//     p.then(res => (console.log(res)))
-// }
-// getData3();
+function getData3() {
+     p.then(res => (console.log(res)))
+}
+ getData3();
