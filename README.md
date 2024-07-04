@@ -317,7 +317,7 @@ Interview Guide
 - Arrow functions do not have their own 'this' binding and take the value of the enclosing lexical context.
 - In the context of DOM elements, 'this' refers to the specific HTML element being interacted with.
 
-# Solid Principles in Javascript
+# [Solid Principles in Javascript]()
 
 ## 🤝 Contribution Guidelines
 
