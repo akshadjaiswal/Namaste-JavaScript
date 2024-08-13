@@ -71,3 +71,4 @@ const obj2 = {
 };
 obj2.x();
 //this inside DOM =====> reference to HTML elements
+//
