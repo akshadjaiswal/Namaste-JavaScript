@@ -315,9 +315,7 @@ Interview Guide
 - Inside an object's method, 'this' refers to the object itself.
 - The 'call' method can be used to invoke a function with a specific 'this' context.
 - Arrow functions do not have their own 'this' binding and take the value of the enclosing lexical context.
-- In the context of DOM elements, 'this' refers to the specific HTML element being interacted with.
-
-# [Solid Principles in Javascript]()
+- In the context of DOM elements, 'this' refers to the specific HTML element being 
 
 ## 🤝 Contribution Guidelines
 
