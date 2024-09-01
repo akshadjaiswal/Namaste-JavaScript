@@ -1,4 +1,5 @@
 //Using promise example
+// fetching GitHub profile data 
 const GITHUB_API = "https://api.github.com/users/akshadjaiswal"
 
 const user = fetch(GITHUB_API);
