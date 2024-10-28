@@ -9,6 +9,8 @@ This is my attempt at sharing JS knowledge with everyone, even those who might n
 ## 📝 Resource Used 
 [Namaste 🙏 JavaScript course](https://www.youtube.com/playlist?list=PLlasXeu85E9cQ32gLCvAvr9vNaUccPVNP) by [Akshay Saini](https://github.com/akshaymarch7)
 
+### [More Learning Resources(React and Node)](#more-learning-resources)
+
 # Season 01:-
 # Episode 1 : Execution Context.
 
@@ -317,7 +319,14 @@ Interview Guide
 - Arrow functions do not have their own 'this' binding and take the value of the enclosing lexical context.
 - In the context of DOM elements, 'this' refers to the specific HTML element being
 
-## More learning after javascript 
+## More Learning Resources
+
+Explore my additional repositories to deepen your understanding of related topics in the JavaScript ecosystem:
+
+- [Namaste NodeJS](https://github.com/akshadjaiswal/Namaste-Nodejs): A repository focused on learning Node.js concepts, from basics to advanced server-side programming.
+- [Namaste React](https://github.com/akshadjaiswal/Namaste-React): A repository dedicated to mastering React.js, covering foundational and advanced aspects of building interactive UIs.
+
+---
 
 ## 🤝 Contribution Guidelines
 
@@ -327,3 +336,5 @@ Interview Guide
 ## ✨ Show your support
 
 Give a ⭐️ if this project helped you and try to contribute and share with people's 
+
+Happy learning and coding!
