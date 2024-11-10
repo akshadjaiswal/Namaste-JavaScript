@@ -10,6 +10,8 @@ This is my attempt at sharing JS knowledge with everyone, even those who might n
 [Namaste 🙏 JavaScript course](https://www.youtube.com/playlist?list=PLlasXeu85E9cQ32gLCvAvr9vNaUccPVNP) by [Akshay Saini](https://github.com/akshaymarch7)
 
 ### [More Learning Resources(React and Node)](#more-learning-resources)
+- React 
+- NodeJs
 
 # Season 01:-
 # Episode 1 : Execution Context.
