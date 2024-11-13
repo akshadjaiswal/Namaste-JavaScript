@@ -10,8 +10,8 @@ This is my attempt at sharing JS knowledge with everyone, even those who might n
 [Namaste 🙏 JavaScript course](https://www.youtube.com/playlist?list=PLlasXeu85E9cQ32gLCvAvr9vNaUccPVNP) by [Akshay Saini](https://github.com/akshaymarch7)
 
 ### [More Learning Resources(React and Node)](#more-learning-resources)
-- React 
-- NodeJs
+- [React](https://github.com/akshadjaiswal/React) 
+- [NodeJs](https://github.com/akshadjaiswal/Namaste-Nodejs)
 
 # Season 01:-
 # Episode 1 : Execution Context.
@@ -304,7 +304,7 @@ Interview Guide
 # Episode 04 : [Promise APIs + Interview Questions]()
 - Questions here soon 🔜
 
-# Episdoe 05 - [this keyword in Javascript]()
+# Episdoe 05 - [this keyword in Javascript](https://github.com/akshadjaiswal/Namaste-JavaScript/blob/main/Lectures%20Codes/23%20this%20keyword%20in%20javascript.js)
 - JavaScript's "this" keyword can be confusing for many and behaves differently in various scenarios.
 - In JavaScript, this keyword refers to the current context or scope within which code is executing. Its value is determined by how a function is called, and it can dynamically change depending on the invocation context.
 -  In the global space, the value of "this" is the global object, which can vary depending on the JavaScript runtime environment (e.g., window in browsers, Global in Node.js).
