@@ -1,10 +1,9 @@
-# Namaste JavaScript Notes (Theory + Code).🎯
+# Namaste JavaScript Notes (Theory + Code)🎯
 This is my attempt at sharing JS knowledge with everyone, even those who might not have the time to go through all the videos. Also, I will use this repo for quick reference to JS concepts when necessary. 
 
-## ❓ what it is-
+## ❓ what it is -
 
 > This repo maintains my version of javascript notes which I learned from the famous [Namaste Javascript Youtube Series](https://www.youtube.com/watch?v=pN6jk0uUrD8&list=PLlasXeu85E9cQ32gLCvAvr9vNaUccPVNP&index=1&ab_channel=AkshaySaini) by Akshay Saini.
-
 
 ## 📝 Resource Used 
 [Namaste 🙏 JavaScript course](https://www.youtube.com/playlist?list=PLlasXeu85E9cQ32gLCvAvr9vNaUccPVNP) by [Akshay Saini](https://github.com/akshaymarch7)
@@ -305,6 +304,7 @@ Interview Guide
 - Questions here soon 🔜
 
 # Episdoe 05 - [this keyword in Javascript](https://github.com/akshadjaiswal/Namaste-JavaScript/blob/main/Lectures%20Codes/23%20this%20keyword%20in%20javascript.js)
+
 - JavaScript's "this" keyword can be confusing for many and behaves differently in various scenarios.
 - In JavaScript, this keyword refers to the current context or scope within which code is executing. Its value is determined by how a function is called, and it can dynamically change depending on the invocation context.
 -  In the global space, the value of "this" is the global object, which can vary depending on the JavaScript runtime environment (e.g., window in browsers, Global in Node.js).
@@ -329,7 +329,6 @@ Explore my additional repositories to deepen your understanding of related topic
 - [Namaste React](https://github.com/akshadjaiswal/Namaste-React): A repository dedicated to mastering React.js, covering foundational and advanced aspects of building interactive UIs.
 
 ---
-
 ## 🤝 Contribution Guidelines
 
 - Please create an issue with your suggestion. 
@@ -337,8 +336,7 @@ Explore my additional repositories to deepen your understanding of related topic
 
 ## ✨ Show your support
 
-Give a ⭐️ if this project helped you and try to contribute and share with people's 
-
+Give a ⭐️ if this project helped you and try to contribute and share with people's
 Happy learning and coding!
 
 ## 🔗 Let's Connect:-
