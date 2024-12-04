@@ -36,6 +36,7 @@ asyncCall();
 const promise = new Promise((res, rej) => {
   res("Promise Resolved")
 })
+
 //async function
 async function getData2() {
   return promise;//if we return the promise so it will never wrap in another promise
@@ -56,6 +57,7 @@ const p1 = new Promise((resolve, reject) => {
     resolve("Second promise reolved")
   }, 5000)
 })
+
 //handling through async await
 //await is a keyword than can only be used in async function
 async function promisehandler() {
