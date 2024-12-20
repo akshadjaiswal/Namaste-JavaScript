@@ -169,7 +169,7 @@ TLDR; Call stack has no timer.
     - Use window keyword like : window.setTimeout(), window.localstorage, window.console.log() to log something inside console.
     - As window is global obj, and all the above functions are present in global object, we don't explicity write window but it is implied.
 - Q: Need of callback queue?
-    - Ans: Suppose user clciks button x6 times. So 6 cb() are put inside callback queue. Event loop sees if call stack is empty/has space and whether callback queue is not empty(6 elements here). Elements of callback queue popped off, put in callstack, executed and then popped off from call stack.
+    - Ans: Suppose user clicks button x6 times. So 6 cb() are put inside callback queue. Event loop sees if call stack is empty/has space and whether callback queue is not empty(6 elements here). Elements of callback queue popped off, put in callstack, executed and then popped off from call stack.
 - What enters the Microtask Queue ?
     - All the callback functions that come through promises go in microtask Queue.
     - Mutation Observer : Keeps on checking whether there is mutation in DOM tree or not, and if there, then it execeutes some callback function.
