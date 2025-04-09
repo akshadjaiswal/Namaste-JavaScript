@@ -1,5 +1,7 @@
 # 🔁 Debouncing
 
+Code
+
 **Definition:**  
 Debouncing is a programming pattern used to limit the rate at which a function is executed. Specifically, it ensures that the function is only called **after a specified delay has passed since the last time the event was triggered**.
 
