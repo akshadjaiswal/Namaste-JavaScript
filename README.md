@@ -2,7 +2,7 @@
 
 This repository is my attempt at sharing JavaScript knowledge with everyone, even those who might not have the time to go through all the videos. I also use this repo for quick reference to JavaScript concepts when necessary. 
 
-## ❓ What it is
+## ❓ What it is?
 
 > This repo maintains my version of JavaScript notes which I learned from the famous [Namaste JavaScript YouTube Series](https://www.youtube.com/playlist?list=PLlasXeu85E9cQ32gLCvAvr9vNaUccPVNP) by Akshay Saini.
 
