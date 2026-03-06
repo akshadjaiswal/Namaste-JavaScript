@@ -1,0 +1,85 @@
+import type { Metadata, Viewport } from 'next'
+import { Playfair_Display, Source_Serif_4, JetBrains_Mono } from 'next/font/google'
+import './globals.css'
+import { Sidebar } from '@/components/sidebar'
+import { Header } from '@/components/header'
+import { getGitHubStars } from '@/lib/github'
+
+const playfair = Playfair_Display({
+  subsets: ['latin'],
+  variable: '--font-heading',
+  display: 'swap',
+})
+
+const sourceSerif = Source_Serif_4({
+  subsets: ['latin'],
+  variable: '--font-body',
+  display: 'swap',
+})
+
+const jetbrains = JetBrains_Mono({
+  subsets: ['latin'],
+  variable: '--font-mono',
+  display: 'swap',
+})
+
+const siteUrl = 'https://namaste-javascript.vercel.app'
+
+export const metadata: Metadata = {
+  title: {
+    default: 'Namaste JavaScript',
+    template: '%s — Namaste JavaScript',
+  },
+  description:
+    'Complete JavaScript learning documentation — 26 episodes across 2 seasons plus Concepts, from fundamentals to async programming.',
+  icons: {
+    icon: '/icon.svg',
+  },
+  metadataBase: new URL(siteUrl),
+  openGraph: {
+    title: 'Namaste JavaScript',
+    description:
+      'Complete JavaScript learning documentation — 26 episodes across 2 seasons plus Concepts.',
+    url: siteUrl,
+    siteName: 'Namaste JavaScript',
+    type: 'website',
+    locale: 'en_US',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Namaste JavaScript',
+    description:
+      'Complete JavaScript learning documentation — 26 episodes across 2 seasons plus Concepts.',
+  },
+}
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  themeColor: '#000000',
+}
+
+export default async function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  const stars = await getGitHubStars()
+
+  return (
+    <html
+      lang="en"
+      className={`${playfair.variable} ${sourceSerif.variable} ${jetbrains.variable}`}
+    >
+      <body className="font-body bg-background text-foreground antialiased">
+        <div className="flex min-h-screen">
+          <Sidebar />
+          <main className="flex-1 min-w-0">
+            <Header stars={stars} />
+            {children}
+          </main>
+        </div>
+      </body>
+    </html>
+  )
+}

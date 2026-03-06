@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    border-color: theme('colors.border-light');
+  }
+
+  body {
+    @apply bg-background text-foreground font-body antialiased;
+  }
+
+  ::selection {
+    @apply bg-foreground text-background;
+  }
+
+  *:focus-visible {
+    outline: 2px solid #E8A000;
+    outline-offset: 2px;
+  }
+}
+
+@layer components {
+  .hr-thick {
+    @apply border-0 h-1 bg-foreground my-8;
+  }
+
+  .hr-thicker {
+    @apply border-0 h-2 bg-foreground my-8;
+  }
+}
