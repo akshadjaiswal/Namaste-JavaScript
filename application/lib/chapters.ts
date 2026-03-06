@@ -10,17 +10,9 @@ const CONCEPT_TITLE_MAP: Record<string, string> = {
   Throtling: 'Throttling',
 }
 
-interface ParsedEpisode {
-  season: 1 | 2
-  episodeNumber: number
-  title: string
-  content: string
-  slug: string
-  number: string
-}
-
-// Module-level cache — safe because Node.js modules are initialized once per process
-let _cachedEpisodes: ParsedEpisode[] | null = null
+// Regex to parse chapter directory names
+// Matches: "Chapter 01 - Title" or "Chapter S2 01 - Title"
+const CHAPTER_DIR_RE = /^Chapter\s+(S(\d)\s+)?(\d+)\s*[-–]\s*(.+)$/
 
 function slugify(text: string): string {
   return text
@@ -33,166 +25,52 @@ function slugify(text: string): string {
     .replace(/^-|-$/g, '')
 }
 
-function extractTitleFromHeading(heading: string): string {
-  // Strip markdown link syntax: [Title](url) or [Title](incomplete-url
-  let title = heading.replace(/\[([^\]]+)\](?:\([^)]*\)?)?/g, '$1')
-  // Strip heading markers (##, #)
-  title = title.replace(/^#+\s*/, '')
-  // Strip leading "Episode N :", "Episode N -", "Episdoe N -" etc.
-  title = title.replace(/^Epis\w*\s+\d+\s*[:\-–]?\s*/i, '')
-  // Strip trailing punctuation
-  title = title.replace(/[.\s]+$/, '').trim()
-  return title
+function parseDirName(dirName: string): { season: 1 | 2; number: string; title: string } | null {
+  const match = dirName.match(CHAPTER_DIR_RE)
+  if (!match) return null
+
+  const seasonNum = match[2] ? parseInt(match[2]) : 1
+  const epNum = match[3]
+  const title = match[4].trim()
+
+  return {
+    season: seasonNum as 1 | 2,
+    number: epNum,
+    title,
+  }
 }
 
-function episodeSlug(season: 1 | 2, num: number, title: string): string {
-  const prefix = season === 1 ? `s1-ep${String(num).padStart(2, '0')}` : `s2-ep${String(num).padStart(2, '0')}`
-  const titleSlug = slugify(title)
+function dirNameToSlug(dirName: string): string {
+  const parsed = parseDirName(dirName)
+  if (!parsed) return slugify(dirName)
+
+  const num = parsed.number.padStart(2, '0')
+  const prefix = parsed.season === 1 ? `s1-ep${num}` : `s2-ep${num}`
+  const titleSlug = slugify(parsed.title)
   return `${prefix}-${titleSlug}`
 }
 
-function parseSeason1Block(block: string): ParsedEpisode[] {
-  const episodes: ParsedEpisode[] = []
-  // Split on ## Episode N lines (H2)
-  const lines = block.split('\n')
-  let currentEpNum = 0
-  let currentTitle = ''
-  let currentLines: string[] = []
+function dirNameToNumber(dirName: string): string {
+  const parsed = parseDirName(dirName)
+  if (!parsed) return ''
 
-  function flush() {
-    if (currentEpNum > 0 && currentTitle) {
-      const content = currentLines.join('\n').trim()
-      episodes.push({
-        season: 1,
-        episodeNumber: currentEpNum,
-        title: currentTitle,
-        content,
-        slug: episodeSlug(1, currentEpNum, currentTitle),
-        number: `EP ${String(currentEpNum).padStart(2, '0')}`,
-      })
-    }
-  }
-
-  for (const line of lines) {
-    // Match H2 episode headings: ## Episode N: or ## Episode N -
-    const epMatch = line.match(/^##\s+Episode\s+(\d+)\s*[:\-–]?\s*(.*)$/i)
-    if (epMatch) {
-      flush()
-      currentEpNum = parseInt(epMatch[1])
-      currentTitle = extractTitleFromHeading(epMatch[2] || `Episode ${currentEpNum}`)
-      if (!currentTitle) currentTitle = `Episode ${currentEpNum}`
-      currentLines = []
-    } else if (currentEpNum > 0) {
-      currentLines.push(line)
-    }
-  }
-  flush()
-
-  return episodes
+  const num = parsed.number.padStart(2, '0')
+  return parsed.season === 1 ? `EP ${num}` : `S2 EP ${num}`
 }
 
-function parseSeason2Block(block: string): ParsedEpisode[] {
-  const episodeMap = new Map<number, ParsedEpisode>()
-  const lines = block.split('\n')
-  let currentEpNum = 0
-  let currentTitle = ''
-  let currentLines: string[] = []
-
-  function flush() {
-    if (currentEpNum > 0 && currentTitle) {
-      const content = currentLines.join('\n').trim()
-      if (episodeMap.has(currentEpNum)) {
-        // Merge duplicate episode numbers by concatenating content
-        const existing = episodeMap.get(currentEpNum)!
-        existing.content = existing.content + '\n\n' + content
-      } else {
-        episodeMap.set(currentEpNum, {
-          season: 2,
-          episodeNumber: currentEpNum,
-          title: currentTitle,
-          content,
-          slug: episodeSlug(2, currentEpNum, currentTitle),
-          number: `S2 EP ${String(currentEpNum).padStart(2, '0')}`,
-        })
-      }
-    }
-  }
-
-  for (const line of lines) {
-    // Stop before "More Learning Resources" section
-    if (/^##\s+More Learning Resources/i.test(line)) {
-      break
-    }
-    // Match H1 episode headings (Season 2 uses # not ##)
-    // Handles typo "Episdoe" as well via loose regex
-    const epMatch = line.match(/^#\s+Epis\w*\s+(\d+)\s*[:\-–]?\s*(.*)$/i)
-    if (epMatch) {
-      flush()
-      currentEpNum = parseInt(epMatch[1])
-      currentTitle = extractTitleFromHeading(epMatch[2] || `Episode ${currentEpNum}`)
-      if (!currentTitle) currentTitle = `Episode ${currentEpNum}`
-      currentLines = []
-    } else if (currentEpNum > 0) {
-      currentLines.push(line)
-    }
-  }
-  flush()
-
-  // Return in order by episode number
-  return Array.from(episodeMap.values()).sort((a, b) => a.episodeNumber - b.episodeNumber)
-}
-
-function getParsedEpisodes(): ParsedEpisode[] {
-  if (_cachedEpisodes) return _cachedEpisodes
-
-  const readmePath = path.join(CONTENT_ROOT, 'README.md')
-  const raw = fs.readFileSync(readmePath, 'utf-8')
-
-  // Split into season blocks by finding # Season 01 and # Season 02 markers
-  const season1Match = raw.match(/^#\s+Season\s+01/im)
-  const season2Match = raw.match(/^#\s+Season\s+02/im)
-
-  let season1Block = ''
-  let season2Block = ''
-
-  if (season1Match && season1Match.index !== undefined) {
-    const start = season1Match.index
-    const end = season2Match?.index ?? raw.length
-    season1Block = raw.slice(start, end)
-  }
-
-  if (season2Match && season2Match.index !== undefined) {
-    season2Block = raw.slice(season2Match.index)
-  }
-
-  const season1Episodes = parseSeason1Block(season1Block)
-  const season2Episodes = parseSeason2Block(season2Block)
-
-  _cachedEpisodes = [...season1Episodes, ...season2Episodes]
-  return _cachedEpisodes
-}
-
-function getConceptChapterMetas(): ChapterMeta[] {
-  const conceptsDir = path.join(CONTENT_ROOT, 'Concepts')
-  if (!fs.existsSync(conceptsDir)) return []
-
-  const entries = fs.readdirSync(conceptsDir, { withFileTypes: true })
+function getAllChapterDirs(): string[] {
+  const entries = fs.readdirSync(CONTENT_ROOT, { withFileTypes: true })
   return entries
-    .filter((e) => e.isDirectory())
-    .map((e) => {
-      const folderName = e.name
-      const displayTitle = CONCEPT_TITLE_MAP[folderName] ?? folderName
-      const slug = `concepts-${folderName.toLowerCase()}`
-      return {
-        slug,
-        dirName: folderName,
-        title: displayTitle,
-        number: 'Concept',
-        season: 3 as const,
-        seasonLabel: 'Concepts',
-      }
+    .filter((e) => e.isDirectory() && CHAPTER_DIR_RE.test(e.name))
+    .map((e) => e.name)
+    .sort((a, b) => {
+      const pa = parseDirName(a)
+      const pb = parseDirName(b)
+      if (!pa || !pb) return a.localeCompare(b)
+      // Sort by season first, then by episode number
+      if (pa.season !== pb.season) return pa.season - pb.season
+      return parseInt(pa.number) - parseInt(pb.number)
     })
-    .sort((a, b) => a.title.localeCompare(b.title))
 }
 
 function extractHeadings(markdown: string): TocHeading[] {
@@ -220,16 +98,43 @@ function extractHeadings(markdown: string): TocHeading[] {
   return headings
 }
 
+function getConceptChapterMetas(): ChapterMeta[] {
+  const conceptsDir = path.join(CONTENT_ROOT, 'Concepts')
+  if (!fs.existsSync(conceptsDir)) return []
+
+  const entries = fs.readdirSync(conceptsDir, { withFileTypes: true })
+  return entries
+    .filter((e) => e.isDirectory())
+    .map((e) => {
+      const folderName = e.name
+      const displayTitle = CONCEPT_TITLE_MAP[folderName] ?? folderName
+      const slug = `concepts-${folderName.toLowerCase()}`
+      return {
+        slug,
+        dirName: folderName,
+        title: displayTitle,
+        number: 'Concept',
+        season: 3 as const,
+        seasonLabel: 'Concepts',
+      }
+    })
+    .sort((a, b) => a.title.localeCompare(b.title))
+}
+
 export function getAllChapters(): ChapterMeta[] {
-  const episodes = getParsedEpisodes()
-  const episodeMetas: ChapterMeta[] = episodes.map((ep) => ({
-    slug: ep.slug,
-    dirName: ep.season === 1 ? 's1-readme' : 's2-readme',
-    title: ep.title,
-    number: ep.number,
-    season: ep.season,
-    seasonLabel: ep.season === 1 ? 'Season 1' : 'Season 2',
-  }))
+  const chapterDirs = getAllChapterDirs()
+
+  const episodeMetas: ChapterMeta[] = chapterDirs.map((dirName) => {
+    const parsed = parseDirName(dirName)!
+    return {
+      slug: dirNameToSlug(dirName),
+      dirName,
+      title: parsed.title,
+      number: dirNameToNumber(dirName),
+      season: parsed.season,
+      seasonLabel: parsed.season === 1 ? 'Season 1' : 'Season 2',
+    }
+  })
 
   const conceptMetas = getConceptChapterMetas()
   return [...episodeMetas, ...conceptMetas]
@@ -238,8 +143,6 @@ export function getAllChapters(): ChapterMeta[] {
 export function getChapterBySlug(slug: string): Chapter | null {
   // Check if it's a concept slug
   if (slug.startsWith('concepts-')) {
-    const folderName = slug.replace('concepts-', '')
-    // Find exact folder match (case-insensitive lookup by slug)
     const conceptsDir = path.join(CONTENT_ROOT, 'Concepts')
     if (!fs.existsSync(conceptsDir)) return null
 
@@ -267,20 +170,26 @@ export function getChapterBySlug(slug: string): Chapter | null {
     }
   }
 
-  // Find in parsed episodes
-  const episodes = getParsedEpisodes()
-  const episode = episodes.find((ep) => ep.slug === slug)
-  if (!episode) return null
+  // Find matching chapter directory by slug
+  const chapterDirs = getAllChapterDirs()
+  const dirName = chapterDirs.find((d) => dirNameToSlug(d) === slug)
+  if (!dirName) return null
+
+  const readmePath = path.join(CONTENT_ROOT, dirName, 'README.md')
+  if (!fs.existsSync(readmePath)) return null
+
+  const content = fs.readFileSync(readmePath, 'utf-8')
+  const parsed = parseDirName(dirName)!
 
   return {
-    slug: episode.slug,
-    dirName: episode.season === 1 ? 's1-readme' : 's2-readme',
-    title: episode.title,
-    number: episode.number,
-    season: episode.season,
-    seasonLabel: episode.season === 1 ? 'Season 1' : 'Season 2',
-    content: episode.content,
-    headings: extractHeadings(episode.content),
+    slug,
+    dirName,
+    title: parsed.title,
+    number: dirNameToNumber(dirName),
+    season: parsed.season,
+    seasonLabel: parsed.season === 1 ? 'Season 1' : 'Season 2',
+    content,
+    headings: extractHeadings(content),
   }
 }
 
