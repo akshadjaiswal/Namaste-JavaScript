@@ -15,22 +15,31 @@ Content is NOT stored inside `application/`. It is read at build time from the p
 
 | Season | Source | How parsed |
 |--------|--------|------------|
-| Season 1 (19 episodes) | `../README.md` | Split on `## Episode N` (H2 headings) |
-| Season 2 (5 episodes) | `../README.md` | Split on `# Episode N` (H1 headings — different level!) |
+| Season 1 (19 episodes) | `../Chapter 01 - Title/README.md` … `../Chapter 19 - Title/README.md` | Directory scan — each directory is one episode page |
+| Season 2 (5 episodes) | `../Chapter S2 01 - Title/README.md` … `../Chapter S2 05 - Title/README.md` | Same directory scan, `S2` prefix distinguishes season |
 | Concepts (2 topics) | `../Concepts/*/README.md` | Each subdirectory is one concept page |
 
 The entire parsing logic lives in `lib/chapters.ts`. Do NOT move content files into `application/`.
 
-## Known README.md parsing gotchas
+## Directory naming convention
 
-These quirks exist in `../README.md` and the parser already handles them:
+Chapter directories follow this exact pattern (matched by regex `^Chapter\s+(S(\d)\s+)?(\d+)\s*[-–]\s*(.+)$`):
 
-1. **Season 1 uses H2, Season 2 uses H1** — the parser splits them separately using two different regex patterns
-2. **Duplicate Season 2 Episode 04** — the README has two `# Episode 04` entries; the parser merges them into one page by concatenating content
-3. **Typo `# Episdoe 05`** — "Episdoe" not "Episode"; the regex uses `Epis\w*\s+(\d+)` to catch this
-4. **Episode 19 broken URL** — `[map, filter, and reduce](https://github.com/...` has no closing `)`. Title extraction uses a regex that handles unclosed links
-5. **Concepts folder typo** — the folder is named `Throtling` (one 't'). The slug is `concepts-throtling` (stable, don't rename). The display title is normalized to "Throttling" via `CONCEPT_TITLE_MAP` in `lib/chapters.ts`
-6. **"More Learning Resources" stop marker** — Season 2 parsing stops when it hits this H2 heading to avoid including the footer section as episode content
+```
+Season 1:  Chapter 01 - Execution Context/README.md
+           Chapter 02 - Execution and Call Stack/README.md
+           ...
+           Chapter 19 - map filter and reduce/README.md
+Season 2:  Chapter S2 01 - Callback Hell/README.md
+           ...
+           Chapter S2 05 - this Keyword in JavaScript/README.md
+Concepts:  Concepts/Debouncing/README.md
+           Concepts/Throtling/README.md   (folder typo — slug is concepts-throtling)
+```
+
+## Concepts folder note
+
+The Concepts folder `Throtling` has a one-`t` typo. The slug is `concepts-throtling` (stable, don't rename). The display title is normalized to "Throttling" via `CONCEPT_TITLE_MAP` in `lib/chapters.ts`.
 
 ## Architecture
 
