@@ -1,0 +1,158 @@
+[
+  {
+    "slug": "s1-ep01-execution-context",
+    "title": "Execution Context",
+    "number": "EP 01",
+    "seasonLabel": "Season 1"
+  },
+  {
+    "slug": "s1-ep02-execution-and-call-stack",
+    "title": "Execution and Call Stack",
+    "number": "EP 02",
+    "seasonLabel": "Season 1"
+  },
+  {
+    "slug": "s1-ep03-hoisting",
+    "title": "Hoisting",
+    "number": "EP 03",
+    "seasonLabel": "Season 1"
+  },
+  {
+    "slug": "s1-ep04-functions-and-variable-environments",
+    "title": "Functions and Variable Environments",
+    "number": "EP 04",
+    "seasonLabel": "Season 1"
+  },
+  {
+    "slug": "s1-ep05-shortest-js-program-window-and-this-keyword",
+    "title": "Shortest JS Program, Window and this Keyword",
+    "number": "EP 05",
+    "seasonLabel": "Season 1"
+  },
+  {
+    "slug": "s1-ep06-undefined-vs-not-defined",
+    "title": "Undefined vs Not Defined",
+    "number": "EP 06",
+    "seasonLabel": "Season 1"
+  },
+  {
+    "slug": "s1-ep07-scope-and-lexical-environment",
+    "title": "Scope and Lexical Environment",
+    "number": "EP 07",
+    "seasonLabel": "Season 1"
+  },
+  {
+    "slug": "s1-ep08-let-const-and-temporal-dead-zone",
+    "title": "let const and Temporal Dead Zone",
+    "number": "EP 08",
+    "seasonLabel": "Season 1"
+  },
+  {
+    "slug": "s1-ep09-block-scope-and-shadowing",
+    "title": "Block Scope and Shadowing",
+    "number": "EP 09",
+    "seasonLabel": "Season 1"
+  },
+  {
+    "slug": "s1-ep10-closures",
+    "title": "Closures",
+    "number": "EP 10",
+    "seasonLabel": "Season 1"
+  },
+  {
+    "slug": "s1-ep11-settimeout-and-closures",
+    "title": "setTimeout and Closures",
+    "number": "EP 11",
+    "seasonLabel": "Season 1"
+  },
+  {
+    "slug": "s1-ep12-closures-interview-questions",
+    "title": "Closures Interview Questions",
+    "number": "EP 12",
+    "seasonLabel": "Season 1"
+  },
+  {
+    "slug": "s1-ep13-first-class-and-anonymous-functions",
+    "title": "First Class and Anonymous Functions",
+    "number": "EP 13",
+    "seasonLabel": "Season 1"
+  },
+  {
+    "slug": "s1-ep14-callbacks-and-event-listeners",
+    "title": "Callbacks and Event Listeners",
+    "number": "EP 14",
+    "seasonLabel": "Season 1"
+  },
+  {
+    "slug": "s1-ep15-asynchronous-js-and-event-loops",
+    "title": "Asynchronous JS and Event Loops",
+    "number": "EP 15",
+    "seasonLabel": "Season 1"
+  },
+  {
+    "slug": "s1-ep16-js-engine-and-v8-architecture",
+    "title": "JS Engine and V8 Architecture",
+    "number": "EP 16",
+    "seasonLabel": "Season 1"
+  },
+  {
+    "slug": "s1-ep17-trust-issues-with-settimeout",
+    "title": "Trust Issues with setTimeout",
+    "number": "EP 17",
+    "seasonLabel": "Season 1"
+  },
+  {
+    "slug": "s1-ep18-higher-order-functions-and-functional-programming",
+    "title": "Higher Order Functions and Functional Programming",
+    "number": "EP 18",
+    "seasonLabel": "Season 1"
+  },
+  {
+    "slug": "s1-ep19-map-filter-and-reduce",
+    "title": "map filter and reduce",
+    "number": "EP 19",
+    "seasonLabel": "Season 1"
+  },
+  {
+    "slug": "s2-ep01-callback-hell",
+    "title": "Callback Hell",
+    "number": "S2 EP 01",
+    "seasonLabel": "Season 2"
+  },
+  {
+    "slug": "s2-ep02-promises",
+    "title": "Promises",
+    "number": "S2 EP 02",
+    "seasonLabel": "Season 2"
+  },
+  {
+    "slug": "s2-ep03-promise-chaining-and-error-handling",
+    "title": "Promise Chaining and Error Handling",
+    "number": "S2 EP 03",
+    "seasonLabel": "Season 2"
+  },
+  {
+    "slug": "s2-ep04-async-await",
+    "title": "async await",
+    "number": "S2 EP 04",
+    "seasonLabel": "Season 2"
+  },
+  {
+    "slug": "s2-ep05-this-keyword-in-javascript",
+    "title": "this Keyword in JavaScript",
+    "number": "S2 EP 05",
+    "seasonLabel": "Season 2"
+  },
+  {
+    "slug": "concepts-debouncing",
+    "title": "Debouncing",
+    "number": "Concept",
+    "seasonLabel": "Concepts"
+  },
+  {
+    "slug": "concepts-throtling",
+    "title": "Throttling",
+    "number": "Concept",
+    "seasonLabel": "Concepts"
+  }
+]

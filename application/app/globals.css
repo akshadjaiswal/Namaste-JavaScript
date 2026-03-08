@@ -61,4 +61,17 @@
       animation: none;
     }
   }
+
+  /* Shiki syntax highlighting — preserve our design system */
+  .shiki {
+    @apply mb-0 overflow-x-auto text-sm leading-7;
+    background-color: #fafafa !important;
+  }
+
+  .shiki code {
+    font-family: var(--font-mono), ui-monospace, monospace;
+    background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+  }
 }

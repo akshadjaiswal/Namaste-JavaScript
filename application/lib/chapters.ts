@@ -73,9 +73,15 @@ function getAllChapterDirs(): string[] {
     })
 }
 
+function computeReadTime(content: string): number {
+  const words = content.trim().split(/\s+/).length
+  return Math.max(1, Math.ceil(words / 200))
+}
+
 function extractHeadings(markdown: string): TocHeading[] {
   const headings: TocHeading[] = []
   const lines = markdown.split('\n')
+  const slugCount = new Map<string, number>()
 
   for (const line of lines) {
     const match = line.match(/^(#{2,4})\s+(.+?)\s*$/)
@@ -88,11 +94,12 @@ function extractHeadings(markdown: string): TocHeading[] {
       .replace(/\[([^\]]+)\]\([^)]*\)?/g, '$1')
       .trim()
 
-    headings.push({
-      text,
-      slug: slugify(text),
-      level,
-    })
+    const base = slugify(text)
+    const count = slugCount.get(base) ?? 0
+    slugCount.set(base, count + 1)
+    const slug = count === 0 ? base : `${base}-${count}`
+
+    headings.push({ text, slug, level })
   }
 
   return headings
@@ -167,6 +174,7 @@ export function getChapterBySlug(slug: string): Chapter | null {
       seasonLabel: 'Concepts',
       content,
       headings: extractHeadings(content),
+      readTime: computeReadTime(content),
     }
   }
 
@@ -190,7 +198,17 @@ export function getChapterBySlug(slug: string): Chapter | null {
     seasonLabel: parsed.season === 1 ? 'Season 1' : 'Season 2',
     content,
     headings: extractHeadings(content),
+    readTime: computeReadTime(content),
   }
+}
+
+export function getSearchIndex() {
+  return getAllChapters().map((ch) => ({
+    slug: ch.slug,
+    title: ch.title,
+    number: ch.number,
+    seasonLabel: ch.seasonLabel,
+  }))
 }
 
 export function getSeasons(): Season[] {
