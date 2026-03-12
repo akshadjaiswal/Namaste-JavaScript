@@ -1,4 +1,4 @@
-# Namaste JavaScript — Notes & Documentation
+# Namaste JavaScript : Notes & Documentation
 
 > Comprehensive JavaScript notes from the [Namaste JavaScript](https://www.youtube.com/playlist?list=PLlasXeu85E9cQ32gLCvAvr9vNaUccPVNP) series by Akshay Saini — written as real documentation, not just bullet points.
 
