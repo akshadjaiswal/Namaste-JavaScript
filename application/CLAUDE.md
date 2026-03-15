@@ -124,6 +124,11 @@ application/
   - Body: Source Serif 4 (`--font-body`)
   - Mono: JetBrains Mono (`--font-mono`)
 - **No border-radius, no box-shadow** — everything is sharp-cornered by design (set to `0` in Tailwind config)
+- **Sidebar active item**: `border-l-4 border-accent` (inactive hover: `border-l-2`)
+- **Sidebar logo link**: `group-hover:opacity-70` hover state
+- **Chapter page metadata**: stacked `flex-col` — season+number in `text-accent`, read time in `text-muted-foreground`
+- **Chapter nav**: Next link has `bg-foreground text-background` by default (primary action); mobile uses `flex-col-reverse`
+- **Home page**: `py-10 md:py-16` container, `mb-14` between season sections, `pl-4 border-l-4 border-accent` per season, chapter number watermark (`text-foreground/5`) inside cards
 
 ## Dependencies (notable)
 
@@ -163,6 +168,18 @@ The `.shiki` CSS class in `globals.css` overrides Shiki's default background to 
 - `SearchTrigger` (in header) listens for the `/` key globally and manages open state.
 - `SearchModal` fetches `/search-index.json` once on open, initialises Fuse.js, and searches as the user types.
 - Keyboard: `↑`/`↓` to move, `Enter` to navigate, `Esc` to close.
+
+## Mobile layout
+
+- Hamburger: `fixed top-3 left-4 z-50 md:hidden` — aligned with header `py-3`
+- Header main row: `pl-14 pr-6 md:px-12 py-3` — `pl-14` clears the hamburger
+- Header attribution: `hidden sm:block` in main row (desktop); `sm:hidden` second row with `pl-14 pr-4` padding (mobile)
+- GitHub star count: `hidden sm:block` — hidden on mobile
+- Mobile drawer: `fixed inset-0 z-50`, panel `w-72`, backdrop closes on click
+
+## TOC duplicate heading dedup
+
+`extractHeadings()` in `lib/chapters.ts` uses a `slugCount: Map<string, number>` to deduplicate slugs. First occurrence keeps the base slug, subsequent ones get `-1`, `-2` suffix — matching `rehype-slug`'s behavior so TOC anchor links are always correct.
 
 ## Sister app
 
