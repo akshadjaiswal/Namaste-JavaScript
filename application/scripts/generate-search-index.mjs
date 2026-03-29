@@ -42,6 +42,24 @@ const chapterDirs = entries
     return parseInt(pa.number) - parseInt(pb.number)
   })
 
+function stripMarkdown(text) {
+  return text
+    .replace(/```[\s\S]*?```/g, '')          // fenced code blocks
+    .replace(/`[^`]+`/g, '')                 // inline code
+    .replace(/^#{1,6}\s+/gm, '')             // heading markers
+    .replace(/!\[.*?\]\(.*?\)/g, '')          // images
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1') // links → keep text
+    .replace(/https?:\/\/\S+/g, '')          // bare URLs
+    .replace(/\*{1,3}([^*]+)\*{1,3}/g, '$1') // bold/italic
+    .replace(/_{1,3}([^_]+)_{1,3}/g, '$1')   // underscore bold/italic
+    .replace(/^>\s*/gm, '')                  // blockquotes
+    .replace(/^---+$/gm, '')                 // horizontal rules
+    .replace(/^[-*+]\s+/gm, '')              // list bullets
+    .replace(/^\d+\.\s+/gm, '')              // numbered lists
+    .replace(/\s+/g, ' ')                    // collapse whitespace
+    .trim()
+}
+
 const index = []
 
 for (const dirName of chapterDirs) {
@@ -51,11 +69,17 @@ for (const dirName of chapterDirs) {
   const prefix = parsed.season === 1 ? `s1-ep${num}` : `s2-ep${num}`
   const slug = `${prefix}-${slugify(parsed.title)}`
   const number = parsed.season === 1 ? `EP ${num}` : `S2 EP ${num}`
+  let content = ''
+  try {
+    const raw = fs.readFileSync(path.join(CONTENT_ROOT, dirName, 'README.md'), 'utf-8')
+    content = stripMarkdown(raw)
+  } catch {}
   index.push({
     slug,
     title: parsed.title,
     number,
     seasonLabel: parsed.season === 1 ? 'Season 1' : 'Season 2',
+    content,
   })
 }
 
@@ -66,11 +90,17 @@ if (fs.existsSync(conceptsDir)) {
   for (const e of conceptEntries) {
     if (!e.isDirectory()) continue
     const displayTitle = CONCEPT_TITLE_MAP[e.name] ?? e.name
+    let content = ''
+    try {
+      const raw = fs.readFileSync(path.join(conceptsDir, e.name, 'README.md'), 'utf-8')
+      content = stripMarkdown(raw)
+    } catch {}
     index.push({
       slug: `concepts-${e.name.toLowerCase()}`,
       title: displayTitle,
       number: 'Concept',
       seasonLabel: 'Concepts',
+      content,
     })
   }
 }
