@@ -52,11 +52,12 @@ application/
 │   ├── error.tsx               # Error boundary (client component)
 │   ├── robots.ts               # robots.txt metadata
 │   ├── sitemap.ts              # Dynamic sitemap from getAllChapters()
-│   ├── opengraph-image.tsx     # OG image (amber bar + title)
+│   ├── opengraph-image.tsx     # OG image (site-level, amber bar + title)
 │   └── chapters/[slug]/
 │       ├── page.tsx            # Episode/concept page with TOC + nav + ReadingProgress
 │       ├── loading.tsx         # Skeleton loading state
-│       └── not-found.tsx       # 404 for bad slugs
+│       ├── not-found.tsx       # 404 for bad slugs
+│       └── opengraph-image.tsx # Per-chapter OG image (1200×630, JS amber)
 ├── components/
 │   ├── sidebar.tsx             # Server wrapper — calls getSeasons()
 │   ├── sidebar-client.tsx      # Client: collapsible nav, mobile overlay
@@ -67,7 +68,11 @@ application/
 │   ├── copy-button.tsx         # 'use client' — copy-to-clipboard for code blocks
 │   ├── reading-progress.tsx    # 'use client' — amber scroll progress bar (chapter pages only)
 │   ├── search-modal.tsx        # 'use client' — Fuse.js search modal (fetch + fuzzy search)
-│   └── search-trigger.tsx      # 'use client' — search icon button + `/` global shortcut
+│   ├── search-trigger.tsx      # 'use client' — search icon button + `/` global shortcut
+│   ├── bookmark-button.tsx     # 'use client' — bookmark toggle; also records last visited
+│   └── continue-reading.tsx    # 'use client' — sidebar continue reading / bookmark link
+├── hooks/
+│   └── use-bookmark.ts         # useLastVisited, useBookmark, useContinueReading hooks
 ├── lib/
 │   ├── chapters.ts             # ALL content parsing — the core of the app
 │   ├── github.ts               # Fetches GitHub star count (cached 1h)
@@ -78,6 +83,8 @@ application/
 │   └── generate-search-index.mjs  # Node script: writes public/search-index.json
 └── public/
     ├── icon.svg                # Favicon (JS amber + black)
+    ├── fonts/
+    │   └── PlayfairDisplay.ttf # Font for OG image generation — do NOT delete
     └── search-index.json       # 26-entry search index (auto-generated at prebuild — do not edit)
 ```
 
@@ -164,10 +171,57 @@ The `.shiki` CSS class in `globals.css` overrides Shiki's default background to 
 
 ## Search — how it works
 
-- At `prebuild`, `scripts/generate-search-index.mjs` writes `public/search-index.json` (26 entries with slug, title, number, seasonLabel).
+- At `prebuild`, `scripts/generate-search-index.mjs` writes `public/search-index.json` (26 entries).
+- Each entry now includes `content` — stripped plain text of the episode/concept body — in addition to `slug`, `title`, `number`, and `seasonLabel`.
 - `SearchTrigger` (in header) listens for the `/` key globally and manages open state.
 - `SearchModal` fetches `/search-index.json` once on open, initialises Fuse.js, and searches as the user types.
+- Fuse.js config: `ignoreLocation: true`, `includeMatches: true`, `threshold: 0.3`, weighted keys: `title 0.6 / content 0.3 / seasonLabel 0.1`.
+- Results show a context snippet around the matched term, highlighted in amber.
 - Keyboard: `↑`/`↓` to move, `Enter` to navigate, `Esc` to close.
+
+## Callout blocks — how they work
+
+Markdown supports GitHub-style callout syntax inside `MarkdownRenderer`:
+
+```
+> [!NOTE]
+> This is a note.
+
+> [!TIP]
+> Helpful tip here.
+
+> [!WARNING]
+> Caution advised.
+
+> [!IMPORTANT]
+> Key information.
+
+> [!CAUTION]
+> Dangerous action.
+```
+
+`markdown-renderer.tsx` detects blockquotes whose first paragraph starts with `[!NOTE]`, `[!TIP]`, `[!WARNING]`, `[!IMPORTANT]`, or `[!CAUTION]` and renders them as styled callout boxes with a coloured left border, an icon, and a label. Each variant has its own color (e.g., blue for NOTE, green for TIP, amber for WARNING, purple for IMPORTANT, red for CAUTION).
+
+## Bookmarks — how they work
+
+`hooks/use-bookmark.ts` provides three hooks:
+- `useLastVisited()` — reads/writes `nj_last_visited` in localStorage (slug of the last episode/concept page opened)
+- `useBookmark()` — reads/writes `nj_bookmark` in localStorage (slug of the explicitly bookmarked episode)
+- `useContinueReading()` — derived hook combining both; used by `ContinueReading`
+
+`BookmarkButton` (`components/bookmark-button.tsx`) is a `'use client'` component placed on each chapter page. It toggles the `nj_bookmark` key and also updates `nj_last_visited` on mount.
+
+`ContinueReading` (`components/continue-reading.tsx`) is a `'use client'` component rendered in the sidebar. It reads both localStorage keys and shows a "Continue reading" link to `nj_last_visited` and/or a "Bookmarked" link to `nj_bookmark`.
+
+localStorage key names for this app: `nj_last_visited`, `nj_bookmark`.
+
+## Per-chapter OG images — how they work
+
+`app/chapters/[slug]/opengraph-image.tsx` generates a unique 1200×630 OG image for every episode/concept at build time using Next.js's `ImageResponse` API.
+
+- It calls `generateStaticParams` (re-exported from `page.tsx`) so Next.js knows which slugs to pre-render.
+- The design features the episode title in Playfair Display, a ghost chapter number watermark, and the JS amber accent color.
+- The font is loaded from `public/fonts/PlayfairDisplay.ttf` at runtime — **do not delete this file** or OG image generation will fail.
 
 ## Mobile layout
 
@@ -193,4 +247,5 @@ This app is modelled after `Namaste-Nodejs/application/`. When making structural
 - Do NOT change the slug format — slugs are stable URLs; changing them breaks bookmarks
 - Do NOT add `Co-Authored-By: Claude` to commits in this repo
 - Do NOT use `@shikijs/rehype` as a rehype plugin in the `react-markdown` pipeline — it is async and will crash with `` `runSync` finished async ``. Use Shiki's `codeToHtml()` directly to pre-process the markdown string before rendering
-- Do NOT edit `public/search-index.json` manually — it is auto-generated by `scripts/generate-search-index.mjs` on every build
+- Do NOT edit `public/search-index.json` manually — it is auto-generated by `scripts/generate-search-index.mjs` on every build; it now includes a `content` field alongside metadata
+- Do NOT delete `public/fonts/PlayfairDisplay.ttf` — it is required for per-chapter OG image generation at runtime
