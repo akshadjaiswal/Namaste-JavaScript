@@ -46,23 +46,23 @@ The Concepts folder `Throtling` has a one-`t` typo. The slug is `concepts-throtl
 ```
 application/
 ├── app/
-│   ├── layout.tsx              # Root layout: sidebar + header + children
-│   ├── page.tsx                # Home: hero + season grids
-│   ├── globals.css             # Tailwind base + .shiki styling + .author-link
+│   ├── layout.tsx              # Root layout: ThemeProvider + sidebar + header + children + blocking script
+│   ├── page.tsx                # Home: hero + season grids + ChapterCompletionBadge
+│   ├── globals.css             # Tailwind base + dark mode + .shiki styling + .author-link
 │   ├── error.tsx               # Error boundary (client component)
 │   ├── robots.ts               # robots.txt metadata
 │   ├── sitemap.ts              # Dynamic sitemap from getAllChapters()
 │   ├── opengraph-image.tsx     # OG image (site-level, amber bar + title)
 │   └── chapters/[slug]/
-│       ├── page.tsx            # Episode/concept page with TOC + nav + ReadingProgress
+│       ├── page.tsx            # Episode/concept page with TOC + nav + ReadingProgress + CompleteButton + ChapterShortcuts
 │       ├── loading.tsx         # Skeleton loading state
 │       ├── not-found.tsx       # 404 for bad slugs
 │       └── opengraph-image.tsx # Per-chapter OG image (1200×630, JS amber)
 ├── components/
 │   ├── sidebar.tsx             # Server wrapper — calls getSeasons()
-│   ├── sidebar-client.tsx      # Client: collapsible nav, mobile overlay
-│   ├── header.tsx              # Sticky header with GitHub star count + SearchTrigger
-│   ├── markdown-renderer.tsx   # Async RSC: Shiki-highlighted react-markdown
+│   ├── sidebar-client.tsx      # Client: collapsible nav, mobile overlay, completion checkmarks, progress bar
+│   ├── header.tsx              # Sticky header with GitHub stars + ShortcutsTrigger + ThemeToggle + SearchTrigger
+│   ├── markdown-renderer.tsx   # Async RSC: Shiki dual-theme highlighted react-markdown + HeadingAnchor
 │   ├── table-of-contents.tsx   # Client: sticky TOC with intersection observer
 │   ├── chapter-nav.tsx         # Prev/Next episode links
 │   ├── copy-button.tsx         # 'use client' — copy-to-clipboard for code blocks
@@ -70,9 +70,17 @@ application/
 │   ├── search-modal.tsx        # 'use client' — Fuse.js search modal (fetch + fuzzy search)
 │   ├── search-trigger.tsx      # 'use client' — search icon button + `/` global shortcut
 │   ├── bookmark-button.tsx     # 'use client' — bookmark toggle; also records last visited
-│   └── continue-reading.tsx    # 'use client' — sidebar continue reading / bookmark link
+│   ├── continue-reading.tsx    # 'use client' — sidebar continue reading / bookmark link
+│   ├── theme-provider.tsx      # 'use client' — ThemeContext, localStorage sync, html.dark toggle
+│   ├── theme-toggle.tsx        # 'use client' — Sun/Moon icon button in header
+│   ├── heading-anchor.tsx      # 'use client' — copy-link-to-section icon on headings
+│   ├── complete-button.tsx     # 'use client' — "Mark Complete" toggle on chapter page
+│   ├── chapter-completion-badge.tsx  # 'use client' — amber checkmark on home page cards
+│   ├── shortcuts-modal.tsx     # 'use client' — keyboard shortcuts reference modal
+│   ├── shortcuts-trigger.tsx   # 'use client' — '?' key listener + Keyboard icon button
+│   └── chapter-shortcuts.tsx   # 'use client' — chapter-page-scoped 'b' key → bookmark
 ├── hooks/
-│   └── use-bookmark.ts         # useLastVisited, useBookmark, useContinueReading hooks
+│   └── use-bookmark.ts         # useLastVisited, useBookmark, useContinueReading, useCompletedChapters hooks
 ├── lib/
 │   ├── chapters.ts             # ALL content parsing — the core of the app
 │   ├── github.ts               # Fetches GitHub star count (cached 1h)
@@ -165,14 +173,18 @@ The `prebuild` script runs `node scripts/generate-search-index.mjs`, which write
 
 ## Syntax highlighting — how it works
 
-`MarkdownRenderer` is an **async** React Server Component. Before rendering, it pre-processes the markdown string with `codeToHtml()` from Shiki (theme: `github-light`), replacing fenced code blocks with highlighted HTML wrapped in `<div data-shiki>`. The `rehype-raw` plugin allows this HTML to pass through the react-markdown pipeline. The `div` renderer in `components` detects `data-shiki` and wraps the output with the amber left border + `CopyButton`.
+`MarkdownRenderer` is an **async** React Server Component. Before rendering, it pre-processes the markdown string with `codeToHtml()` from Shiki, rendering **both** `github-light` and `github-dark` themes, wrapping each in `.shiki-light` / `.shiki-dark` divs inside a `<div data-shiki>`. The `rehype-raw` plugin allows this HTML to pass through the react-markdown pipeline. The `div` renderer detects `data-shiki` and wraps the output with the amber left border + `CopyButton`.
 
-The `.shiki` CSS class in `globals.css` overrides Shiki's default background to `#fafafa`.
+The `pre` renderer checks `className?.includes('shiki')` — if true, passes through as a plain `<pre>`. This prevents double-wrapping.
+
+The `.shiki` CSS class in `globals.css` overrides Shiki's default background. CSS toggles which theme is shown based on `html.dark`.
+
+Code block wrapper classes: `overflow-x-auto bg-[#fafafa] dark:bg-[#1e1e1e] border border-border-light dark:border-[#2A2A2A] border-l-[3px] border-l-accent px-5 pb-5 pt-10 shiki-wrapper`
 
 ## Search — how it works
 
 - At `prebuild`, `scripts/generate-search-index.mjs` writes `public/search-index.json` (26 entries).
-- Each entry now includes `content` — stripped plain text of the episode/concept body — in addition to `slug`, `title`, `number`, and `seasonLabel`.
+- Each entry includes `content` — stripped plain text of the episode/concept body — alongside `slug`, `title`, `number`, and `seasonLabel`.
 - `SearchTrigger` (in header) listens for the `/` key globally and manages open state.
 - `SearchModal` fetches `/search-index.json` once on open, initialises Fuse.js, and searches as the user types.
 - Fuse.js config: `ignoreLocation: true`, `includeMatches: true`, `threshold: 0.3`, weighted keys: `title 0.6 / content 0.3 / seasonLabel 0.1`.
@@ -200,20 +212,59 @@ Markdown supports GitHub-style callout syntax inside `MarkdownRenderer`:
 > Dangerous action.
 ```
 
-`markdown-renderer.tsx` detects blockquotes whose first paragraph starts with `[!NOTE]`, `[!TIP]`, `[!WARNING]`, `[!IMPORTANT]`, or `[!CAUTION]` and renders them as styled callout boxes with a coloured left border, an icon, and a label. Each variant has its own color (e.g., blue for NOTE, green for TIP, amber for WARNING, purple for IMPORTANT, red for CAUTION).
+`markdown-renderer.tsx` detects blockquotes whose first paragraph starts with `[!NOTE]`, `[!TIP]`, `[!WARNING]`, `[!IMPORTANT]`, or `[!CAUTION]` and renders them as styled callout boxes with a coloured left border, an icon, and a label.
 
 ## Bookmarks — how they work
 
-`hooks/use-bookmark.ts` provides three hooks:
-- `useLastVisited()` — reads/writes `nj_last_visited` in localStorage (slug of the last episode/concept page opened)
-- `useBookmark()` — reads/writes `nj_bookmark` in localStorage (slug of the explicitly bookmarked episode)
+`hooks/use-bookmark.ts` provides hooks:
+- `useLastVisited()` — reads/writes `nj_last_visited` in localStorage
+- `useBookmark()` — reads/writes `nj_bookmark` in localStorage
 - `useContinueReading()` — derived hook combining both; used by `ContinueReading`
 
-`BookmarkButton` (`components/bookmark-button.tsx`) is a `'use client'` component placed on each chapter page. It toggles the `nj_bookmark` key and also updates `nj_last_visited` on mount.
+`BookmarkButton` (`components/bookmark-button.tsx`) is a `'use client'` component placed on each chapter page.
 
-`ContinueReading` (`components/continue-reading.tsx`) is a `'use client'` component rendered in the sidebar. It reads both localStorage keys and shows a "Continue reading" link to `nj_last_visited` and/or a "Bookmarked" link to `nj_bookmark`.
+`ContinueReading` (`components/continue-reading.tsx`) is a `'use client'` component rendered in the sidebar.
 
-localStorage key names for this app: `nj_last_visited`, `nj_bookmark`.
+localStorage key names for this app: `nj_last_visited`, `nj_bookmark`, `nj_completed`, `nj_theme`.
+
+## Dark mode — how it works
+
+`tailwind.config.js` uses `darkMode: 'class'`. A blocking inline `<script>` in `<head>` (in `app/layout.tsx`) reads `nj_theme` from localStorage before any paint, adding `class="dark"` to `<html>` to prevent flash-of-incorrect-theme. `ThemeProvider` (`components/theme-provider.tsx`) manages state and exposes `useTheme()`. `ThemeToggle` (`components/theme-toggle.tsx`) is a Sun/Moon icon button in the header.
+
+Shiki dual-render: Because `MarkdownRenderer` is an async RSC and cannot read client theme state, each code block is rendered twice — once with `github-light`, once with `github-dark` — wrapped in `.shiki-light` / `.shiki-dark` divs. CSS in `globals.css` shows only the correct one: `html.dark .shiki-light { display: none }` / `html.dark .shiki-dark { display: block }`.
+
+Dark color mappings used throughout components:
+- bg: `dark:bg-[#0A0A0A]`, text: `dark:text-[#FAFAFA]`
+- inverted bg: `dark:bg-[#FAFAFA]`, inverted text: `dark:text-[#0A0A0A]`
+- border: `dark:border-[#FAFAFA]`, subtle border: `dark:border-[#2A2A2A]`
+- muted bg: `dark:bg-[#1A1A1A]`, muted text: `dark:text-[#A3A3A3]`
+- code bg: `dark:bg-[#1e1e1e]`, inline code bg: `dark:bg-[#1A2A1A]`, inline code text: `dark:text-[#A8D8A8]`
+- copy button bg: `dark:bg-[#2D2D2D]` (distinct from code block bg)
+
+## Heading anchor links — how they work
+
+`HeadingAnchor` (`components/heading-anchor.tsx`) is a `'use client'` component rendered inside h2/h3/h4 elements in `MarkdownRenderer`. `rehype-slug` adds `id` attributes to headings; these are forwarded as props. The anchor icon (`<Link2>`) is hidden by default and revealed on heading hover via Tailwind `group` + `group-hover:opacity-60`. Clicking it copies the full URL (origin + path + `#id`) to clipboard and pushes the hash into browser history.
+
+## Chapter completion tracking — how it works
+
+`hooks/use-bookmark.ts` exports `useCompletedChapters()`:
+- Reads/writes `nj_completed` in localStorage — a JSON array of completed slugs.
+- Returns `{ completed, isCompleted(slug), toggle(slug) }`.
+- `toggle` uses direct setState (not functional updater) to avoid setState-during-render error when `dispatch()` fires synchronously.
+
+`CompleteButton` (`components/complete-button.tsx`) — `'use client'` button on each chapter page. Mirrors `BookmarkButton` style.
+
+`ChapterCompletionBadge` (`components/chapter-completion-badge.tsx`) — `'use client'` component on home page chapter cards. Renders an amber `bg-accent` checkmark overlay (`absolute top-2 right-2`) when the chapter is completed.
+
+`SidebarClient` reads `isCompleted()` per chapter to show `<Check>` icons. When `completedCount > 0`, shows a progress bar with `X / 26` counter above `ContinueReading`.
+
+## Keyboard shortcuts — how they work
+
+`ShortcutsTrigger` (`components/shortcuts-trigger.tsx`) — `'use client'`. Global `keydown` listener for `e.key === '?'` (toggling the modal). Renders a `<Keyboard>` icon button in the header.
+
+`ShortcutsModal` (`components/shortcuts-modal.tsx`) — `'use client'`. Full-screen overlay listing all keyboard shortcuts. Closes on `Esc` or backdrop click.
+
+`ChapterShortcuts` (`components/chapter-shortcuts.tsx`) — `'use client'`, renders `null`. Placed only on chapter pages. Listens for `e.key === 'b'` to toggle bookmark. Unmounts on navigation so it never fires on non-chapter pages.
 
 ## Per-chapter OG images — how they work
 
@@ -237,7 +288,7 @@ localStorage key names for this app: `nj_last_visited`, `nj_bookmark`.
 
 ## Sister app
 
-This app is modelled after `Namaste-Nodejs/application/`. When making structural changes, it's worth checking how the NodeJS app handles the same problem. The main difference is the content parsing layer — Node.js uses separate chapter directories, JS uses a single README.
+This app is modelled after `Namaste-Nodejs/application/`. When making structural changes, check how the Node.js app handles the same problem. Key differences: JS app uses `nj_` localStorage prefix (Node.js uses `nn_`), slug format differs (`s1-ep01-` vs `01-`), and Season 3 is called "Concepts" here.
 
 ## Do not
 
@@ -247,5 +298,6 @@ This app is modelled after `Namaste-Nodejs/application/`. When making structural
 - Do NOT change the slug format — slugs are stable URLs; changing them breaks bookmarks
 - Do NOT add `Co-Authored-By: Claude` to commits in this repo
 - Do NOT use `@shikijs/rehype` as a rehype plugin in the `react-markdown` pipeline — it is async and will crash with `` `runSync` finished async ``. Use Shiki's `codeToHtml()` directly to pre-process the markdown string before rendering
-- Do NOT edit `public/search-index.json` manually — it is auto-generated by `scripts/generate-search-index.mjs` on every build; it now includes a `content` field alongside metadata
+- Do NOT edit `public/search-index.json` manually — it is auto-generated by `scripts/generate-search-index.mjs` on every build; it includes a `content` field alongside metadata
 - Do NOT delete `public/fonts/PlayfairDisplay.ttf` — it is required for per-chapter OG image generation at runtime
+- Do NOT put `text-foreground` on the block `<code>` element inside Shiki wrappers — `foreground` is `#000000` with no dark variant, which makes code invisible on dark backgrounds
