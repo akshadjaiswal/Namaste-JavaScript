@@ -7,6 +7,7 @@ import rehypeRaw from 'rehype-raw'
 import { codeToHtml } from 'shiki'
 import type { Components } from 'react-markdown'
 import { CopyButton } from './copy-button'
+import { HeadingAnchor } from './heading-anchor'
 
 interface MarkdownRendererProps {
   content: string
@@ -55,7 +56,7 @@ function extractText(node: ReactNode): string {
   return ''
 }
 
-// Pre-process markdown: replace fenced code blocks with highlighted HTML
+// Pre-process markdown: replace fenced code blocks with highlighted HTML (dual theme)
 async function highlightCodeBlocks(markdown: string): Promise<string> {
   const fenceRe = /^```(\w*)\n([\s\S]*?)^```/gm
   const blocks: Array<{ placeholder: string; replacement: string }> = []
@@ -67,19 +68,17 @@ async function highlightCodeBlocks(markdown: string): Promise<string> {
     const placeholder = `%%SHIKI_BLOCK_${blocks.length}%%`
 
     try {
-      const html = await codeToHtml(code, {
-        lang,
-        theme: 'github-light',
+      const htmlLight = await codeToHtml(code, { lang, theme: 'github-light' })
+      const htmlDark  = await codeToHtml(code, { lang, theme: 'github-dark' })
+      blocks.push({
+        placeholder,
+        replacement: `<div data-shiki><div class="shiki-light">${htmlLight}</div><div class="shiki-dark">${htmlDark}</div></div>`,
       })
-      // Wrap in a div we can detect; strip shiki's outer <pre> wrapper for our own styling
-      blocks.push({ placeholder, replacement: `<div data-shiki>${html}</div>` })
     } catch {
-      // Unknown language — fallback to plain code block
       blocks.push({ placeholder, replacement: match[0] })
     }
   }
 
-  // Replace all fenced blocks with placeholders, then swap in real HTML
   let blockIndex = 0
   let result = markdown.replace(fenceRe, () => {
     return blocks[blockIndex++].placeholder
@@ -89,7 +88,6 @@ async function highlightCodeBlocks(markdown: string): Promise<string> {
     result = result.replace(b.placeholder, b.replacement)
   }
 
-  // Put back placeholders that weren't consumed (shouldn't happen)
   return result
 }
 
@@ -102,19 +100,22 @@ export async function MarkdownRenderer({ content, chapterSlug }: MarkdownRendere
         {children}
       </h1>
     ),
-    h2: ({ children, ...props }) => (
-      <h2 className="font-heading text-2xl md:text-3xl font-bold tracking-tight mt-10 mb-4 pb-2 border-b-2 border-foreground" {...props}>
+    h2: ({ children, id, ...props }) => (
+      <h2 id={id} className="group font-heading text-2xl md:text-3xl font-bold tracking-tight mt-10 mb-4 pb-2 border-b-2 border-foreground dark:border-[#2A2A2A] flex items-baseline gap-1" {...props}>
         {children}
+        {id && <HeadingAnchor id={id} />}
       </h2>
     ),
-    h3: ({ children, ...props }) => (
-      <h3 className="font-heading text-xl md:text-2xl font-bold mt-8 mb-3" {...props}>
+    h3: ({ children, id, ...props }) => (
+      <h3 id={id} className="group font-heading text-xl md:text-2xl font-bold mt-8 mb-3 flex items-baseline gap-1" {...props}>
         {children}
+        {id && <HeadingAnchor id={id} />}
       </h3>
     ),
-    h4: ({ children, ...props }) => (
-      <h4 className="font-heading text-lg font-semibold mt-6 mb-2" {...props}>
+    h4: ({ children, id, ...props }) => (
+      <h4 id={id} className="group font-heading text-lg font-semibold mt-6 mb-2 flex items-baseline gap-1" {...props}>
         {children}
+        {id && <HeadingAnchor id={id} />}
       </h4>
     ),
     p: ({ children }) => (
@@ -133,8 +134,6 @@ export async function MarkdownRenderer({ content, chapterSlug }: MarkdownRendere
     li: ({ children }) => (
       <li className="leading-relaxed">{children}</li>
     ),
-    // Shiki-highlighted blocks arrive as <div data-shiki><pre class="shiki">...</pre></div>
-    // We detect them by checking if the div has a data-shiki attribute
     div: ({ children, ...props }) => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const isShiki = (props as any)['data-shiki'] !== undefined
@@ -143,7 +142,7 @@ export async function MarkdownRenderer({ content, chapterSlug }: MarkdownRendere
         return (
           <div className="relative mb-6">
             <CopyButton text={rawText} />
-            <div className="overflow-x-auto bg-[#fafafa] border border-border-light border-l-[3px] border-l-accent px-5 pb-5 pt-10 shiki-wrapper">
+            <div className="overflow-x-auto bg-[#fafafa] dark:bg-[#1e1e1e] border border-border-light dark:border-[#2A2A2A] border-l-[3px] border-l-accent px-5 pb-5 pt-10 shiki-wrapper">
               {children}
             </div>
           </div>
@@ -161,7 +160,7 @@ export async function MarkdownRenderer({ content, chapterSlug }: MarkdownRendere
       return (
         <div className="relative mb-6">
           <CopyButton text={rawText} />
-          <pre className="overflow-x-auto bg-[#fafafa] border border-border-light border-l-[3px] border-l-accent p-5 font-mono text-sm leading-7 pt-10">
+          <pre className="overflow-x-auto bg-[#fafafa] dark:bg-[#1e1e1e] border border-border-light dark:border-[#2A2A2A] border-l-[3px] border-l-accent p-5 font-mono text-sm leading-7 pt-10">
             {children}
           </pre>
         </div>
@@ -171,34 +170,34 @@ export async function MarkdownRenderer({ content, chapterSlug }: MarkdownRendere
       const isBlock = className?.startsWith('language-')
       if (isBlock) {
         return (
-          <code className="font-mono text-foreground" {...props}>
+          <code className="font-mono" {...props}>
             {children}
           </code>
         )
       }
       return (
-        <code className="font-mono text-sm bg-[#f5f5f5] border border-border-light px-1.5 py-0.5">
+        <code className="font-mono text-sm bg-[#f5f5f5] dark:bg-[#1A2A1A] dark:text-[#A8D8A8] border border-border-light dark:border-[#3A4A3A] px-1.5 py-0.5">
           {children}
         </code>
       )
     },
     table: ({ children }) => (
       <div className="overflow-x-auto mb-6">
-        <table className="w-full border-collapse border-2 border-foreground font-body text-sm">
+        <table className="w-full border-collapse border-2 border-foreground dark:border-[#2A2A2A] font-body text-sm">
           {children}
         </table>
       </div>
     ),
     thead: ({ children }) => (
-      <thead className="bg-foreground text-background">{children}</thead>
+      <thead className="bg-foreground dark:bg-[#FAFAFA] text-background dark:text-[#0A0A0A]">{children}</thead>
     ),
     th: ({ children }) => (
-      <th className="border border-foreground p-3 text-left font-heading font-bold">
+      <th className="border border-foreground dark:border-[#2A2A2A] p-3 text-left font-heading font-bold">
         {children}
       </th>
     ),
     td: ({ children }) => (
-      <td className="border border-foreground p-3">{children}</td>
+      <td className="border border-foreground dark:border-[#2A2A2A] p-3">{children}</td>
     ),
     img: ({ src, alt }) => {
       if (!src || typeof src !== 'string') return null
@@ -219,7 +218,7 @@ export async function MarkdownRenderer({ content, chapterSlug }: MarkdownRendere
           <img
             src={imageSrc}
             alt={alt || ''}
-            className="max-w-full border-2 border-foreground"
+            className="max-w-full border-2 border-foreground dark:border-[#2A2A2A]"
           />
         </span>
       )
@@ -252,7 +251,7 @@ export async function MarkdownRenderer({ content, chapterSlug }: MarkdownRendere
         )
       }
       return (
-        <blockquote className="border-l-4 border-foreground pl-6 my-6 font-body italic text-muted-foreground">
+        <blockquote className="border-l-4 border-foreground dark:border-[#2A2A2A] pl-6 my-6 font-body italic text-muted-foreground dark:text-[#A3A3A3]">
           {children}
         </blockquote>
       )
