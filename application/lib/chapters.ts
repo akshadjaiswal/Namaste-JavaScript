@@ -116,6 +116,12 @@ function getConceptChapterMetas(): ChapterMeta[] {
       const folderName = e.name
       const displayTitle = CONCEPT_TITLE_MAP[folderName] ?? folderName
       const slug = `concepts-${folderName.toLowerCase()}`
+      let readTime = 1
+      try {
+        const readmePath = path.join(conceptsDir, folderName, 'README.md')
+        const content = fs.readFileSync(readmePath, 'utf-8')
+        readTime = computeReadTime(content)
+      } catch {}
       return {
         slug,
         dirName: folderName,
@@ -123,6 +129,7 @@ function getConceptChapterMetas(): ChapterMeta[] {
         number: 'Concept',
         season: 3 as const,
         seasonLabel: 'Concepts',
+        readTime,
       }
     })
     .sort((a, b) => a.title.localeCompare(b.title))
@@ -133,6 +140,12 @@ export function getAllChapters(): ChapterMeta[] {
 
   const episodeMetas: ChapterMeta[] = chapterDirs.map((dirName) => {
     const parsed = parseDirName(dirName)!
+    let readTime = 1
+    try {
+      const readmePath = path.join(CONTENT_ROOT, dirName, 'README.md')
+      const content = fs.readFileSync(readmePath, 'utf-8')
+      readTime = computeReadTime(content)
+    } catch {}
     return {
       slug: dirNameToSlug(dirName),
       dirName,
@@ -140,6 +153,7 @@ export function getAllChapters(): ChapterMeta[] {
       number: dirNameToNumber(dirName),
       season: parsed.season,
       seasonLabel: parsed.season === 1 ? 'Season 1' : 'Season 2',
+      readTime,
     }
   })
 
